@@ -1197,7 +1197,7 @@ if($code1==$code){
 Flight::route('POST /validateLogIn/@headerslink', function ($headerslink) {
     header("Access-Control-Allow-Origin: *");
     // Leer los encabezados
-    $headers = getallheaders();
+    //$headers = getallheaders();
     
     // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
     if ($headerslink!="0") {
