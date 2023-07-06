@@ -1222,7 +1222,7 @@ Flight::route('POST /validateLogIn/@headerslink', function ($headerslink) {
       curl_setopt($curl, CURLOPT_POST, true);
       curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
       curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-      // curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+      curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
       
       // Ejecutar la solicitud y obtener la respuesta
       $response1 = curl_exec($curl);
