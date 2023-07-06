@@ -7,6 +7,7 @@ require_once 'database/db_users.php';
 
 
 Flight::route('POST /authApiKey', function () {
+    header("Access-Control-Allow-Origin: *");
     //$conectar = conn();
     //$uri = $_SERVER['REQUEST_URI'];
     $dta = array(
@@ -56,6 +57,7 @@ echo "Unauthorized";
 
 
 Flight::route('POST /authApiKeyGateway', function () {
+    header("Access-Control-Allow-Origin: *");
     //$conectar = conn();
     //$uri = $_SERVER['REQUEST_URI'];
     $dta = array(
@@ -106,6 +108,7 @@ echo "Unauthorized";
 
 
 Flight::route('POST /authApiKeyLog', function () {
+    header("Access-Control-Allow-Origin: *");
     //$conectar = conn();
     //$uri = $_SERVER['REQUEST_URI'];
     $dta = array(
@@ -154,6 +157,7 @@ echo "Unauthorized";
 
 
 Flight::route('POST /authApiKeyLogGateway', function () {
+    header("Access-Control-Allow-Origin: *");
     //$conectar = conn();
     //$uri = $_SERVER['REQUEST_URI'];
     $dta = array(
