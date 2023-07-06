@@ -3,7 +3,7 @@
 class model_domain {
 
 function dom() {
-    $option=1; //opcion de subdominio
+    $option=2; //opcion de subdominio
 
 
     if($option==1){//localhost
@@ -29,7 +29,7 @@ function dom() {
    
 }
 function domIntegrations() {
-    $option=1; //opcion de subdominio
+    $option=2; //opcion de subdominio
 
 
     if($option==1){//localhost
