@@ -117,7 +117,7 @@ Flight::route('POST /authApiKeyLog', function () {
     
     );
     echo Flight::request()->data->xApiKey;
-    if(strlen(Flight::request()->data->xApiKey) == 25){
+    if(strlen(Flight::request()->data->xApiKey) > 24){
       
        
             
