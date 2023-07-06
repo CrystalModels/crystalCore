@@ -1280,12 +1280,12 @@ Flight::route('POST /validateLogIn/@headerslink', function ($headerslink) {
 
             }else{
 
-                echo "false";
+                echo "false1";
                // echo $keyWord;
             }
 }else {
-    echo $response1;
-    echo 'Error: Autenticación fallida1';
+    
+    echo 'Error: Autenticación fallida';
 }
 
 
