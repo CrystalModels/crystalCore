@@ -12,17 +12,17 @@ function dom() {
 
     }
     if($option==2){//desarrollo
- $sub_domain="https://dev-crystalbroker.crystalmodels.online"; // o dirección IP del servidor de la base de datos remota
+ $sub_domain="https://dev-crystalcore.crystalmodels.online"; // o dirección IP del servidor de la base de datos remota
  return $sub_domain;
 
     }
     if($option==3){//pruebas-staging
-        $sub_domain="https://staging-crystalbroker.crystalmodels.online";
+        $sub_domain="https://staging-crystalcore.crystalmodels.online";
         return $sub_domain;
     }
     if($option==4){//ptoducción
 
-        $sub_domain="https://crystalbroker.crystalmodels.online";
+        $sub_domain="https://crystalcore.crystalmodels.online";
         return $sub_domain;
     }
    //$sub_domain="https://dev-lugmacore.lugma.tech"; // o dirección IP del servidor de la base de datos remota
