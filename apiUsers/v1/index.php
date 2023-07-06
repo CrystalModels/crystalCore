@@ -1194,25 +1194,25 @@ if($code1==$code){
 
 
 
-Flight::route('POST /validateLogIn/', function () {
+Flight::route('POST /validateLogIn/@headerslink', function ($headerslink) {
     header("Access-Control-Allow-Origin: *");
     // Leer los encabezados
     $headers = getallheaders();
     
     // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
-    if (isset($headers['x-api-Key'])) {
+    if ($headerslink!="0") {
         // Leer los datos de la solicitud
        
         // Acceder a los encabezados
         
-        $xApiKey = $headers['x-api-Key'];
+        
         
         $sub_domaincon=new model_domain();
         $sub_domain=$sub_domaincon->dom();
         $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKeyLog/';
       
         $data = array(
-          'xApiKey' => $xApiKey
+          'xApiKey' => $headerslink
           
           );
       $curl = curl_init();
