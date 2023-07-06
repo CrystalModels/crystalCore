@@ -117,7 +117,7 @@ Flight::route('POST /authApiKeyLog', function () {
     
     );
    $tkn= Flight::request()->data->xApiKey;
-    if(strlen(Flight::request()->data->xApiKey) > 24){
+    if(strlen($tkn) > 24){
       
        
             
@@ -150,7 +150,7 @@ Flight::route('POST /authApiKeyLog', function () {
        
         //echo json_encode($info);
         echo  $tkn;
-echo "Unauthorized";
+echo "Unauthorized123";
 //echo json_encode($dta);
     }
 
