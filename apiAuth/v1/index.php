@@ -149,8 +149,8 @@ Flight::route('POST /authApiKeyLog', function () {
     }else{
        
         //echo json_encode($info);
-        echo  $tkn;
-echo "Unauthorized123";
+     
+echo "Unauthorized";
 //echo json_encode($dta);
     }
 

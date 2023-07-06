@@ -1280,7 +1280,7 @@ Flight::route('POST /validateLogIn/@headerslink', function ($headerslink) {
 
             }else{
 
-                echo "false1";
+                echo "false";
                // echo $keyWord;
             }
 }else {
