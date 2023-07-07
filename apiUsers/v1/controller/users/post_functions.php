@@ -67,6 +67,20 @@
               $ranCode = generateRandomCode();
              $dta['ranCode'] = $ranCode;
             
+
+             
+ini_set( 'display_errors', 1 );
+error_reporting( E_ALL );
+$from = "no-responder@crystalmodels.online";
+$to = $dta['personallMail'];;
+$subject = "Usuario Crystal Models";
+
+$message = 'Tu usuario fue creado correctamente.   ';
+$message = 'Tu usuario es: '.$username.' Tu contrasena es: '.$usernamekey2;
+
+
+$headers = "From:" . $from;
+mail($to,$subject,$message, $headers);
            $model = new model_functions();
             return $model->model_user($dta);
         }

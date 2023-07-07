@@ -127,6 +127,8 @@ $diferenciaSegundos = $diferencia->format('%s');
 echo "Diferencia de horas: $diferenciaHoras horas, $diferenciaMinutos minutos, $diferenciaSegundos segundos";
 //*/
 echo $response3;
+
+
 }
 else{
 echo "false";
