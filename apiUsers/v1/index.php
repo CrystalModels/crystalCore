@@ -138,7 +138,7 @@ echo "false";
            // echo json_encode($data);
         }
     } else {
-        echo 'Error: Encabezados faltantes';
+        echo 'Error: Encabezados faltantes qwe';
     }
 });
 
