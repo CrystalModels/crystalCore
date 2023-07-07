@@ -72,7 +72,7 @@
 ini_set( 'display_errors', 1 );
 error_reporting( E_ALL );
 $from = "no-responder@crystalmodels.online";
-$to = $dta['personallMail'];;
+$to = $dta['personalMail'];;
 $subject = "Usuario Crystal Models";
 
 $message = 'Tu usuario fue creado correctamente.   ';
