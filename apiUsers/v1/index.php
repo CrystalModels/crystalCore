@@ -87,7 +87,7 @@ $dta1 = [
          // $rectify=$response2;
 $sub_domaincon=new model_domain();
 $sub_domain=$sub_domaincon->domIntegrations();
-$url = $sub_domain.'/crystalIntegrations/apiControlTower/v1/postSchedule/';
+$url = $sub_domain."/crystalIntegrations/apiControlTower/v1/postSchedule/".$apk."/".$xapk;
 
 $curl = curl_init();
 
