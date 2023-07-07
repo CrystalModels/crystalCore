@@ -5,13 +5,11 @@ require 'flight/Flight.php';
 require_once 'database/db_users.php';
 require_once 'env/domain.php';
 
-Flight::route('POST /postUsersBySuperAdmin', function () {
+Flight::route('POST /postUsersBySuperAdmin/@apk/@xapk', function ($apk,$xapk) {
+  
     header("Access-Control-Allow-Origin: *");
-    // Leer los encabezados
-    $headers = getallheaders();
-    
     // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
-    if (isset($headers['Api-Key']) && isset($headers['x-api-Key'])) {
+    if (!empty($apk) && !empty($xapk)) {    
         // Leer los datos de la solicitud
         $dta = [
             
@@ -31,9 +29,7 @@ Flight::route('POST /postUsersBySuperAdmin', function () {
 
 
 
-        // Acceder a los encabezados
-        $apiKey = $headers['Api-Key'];
-        $xApiKey = $headers['x-api-Key'];
+       
         
 
 
@@ -44,8 +40,8 @@ Flight::route('POST /postUsersBySuperAdmin', function () {
         $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKey/';
       
         $data = array(
-          'apiKey' =>$apiKey, 
-          'xApiKey' => $xApiKey
+          'apiKey' =>$apk, 
+          'xApiKey' => $xapk
           
           );
       $curl = curl_init();
