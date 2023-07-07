@@ -447,6 +447,8 @@ Flight::route('POST /putUsersBySuperAdmin/@apk/@xapk/@putId', function ($apk,$xa
             $name= Flight::request()->data->name;
             $lastName=Flight::request()->data->lastName;
             $personalMail=Flight::request()->data->personalMail;
+            $internalMail=Flight::request()->data->internalMail;
+            $companyMail=Flight::request()->data->companyMail;
             $imageUrl= Flight::request()->data->imageUrl;
        
 
@@ -498,7 +500,7 @@ Flight::route('POST /putUsersBySuperAdmin/@apk/@xapk/@putId', function ($apk,$xa
 
     $query2= mysqli_query($conectar,"UPDATE generalProfiles set name='$name', lastName='$lastName', imageUrl='$imageUrl' where profileId='$putId'");
              
-    $query2= mysqli_query($conectar,"UPDATE generalUsers set personalMail='$personalMail' where profileId='$putId'");
+    $query2= mysqli_query($conectar,"UPDATE generalUsers set personalMail='$personalMail',internalMail='$internalMail',companyMail='$companyMail' where profileId='$putId'");
                            
  echo "true";
 
