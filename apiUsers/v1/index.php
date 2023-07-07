@@ -98,8 +98,8 @@ curl_setopt($curl, CURLOPT_POSTFIELDS, $dta1);
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
 $headers1 = array(
-    'Api-Key: ' . $apiKey,
-    'x-api-Key: ' . $xApiKey
+    'Api-Key: ' . $apk,
+    'x-api-Key: ' . $xapk
 );
 curl_setopt($curl, CURLOPT_HTTPHEADER, $headers1);
 
