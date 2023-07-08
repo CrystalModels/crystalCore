@@ -99,6 +99,7 @@ Flight::route('POST /authApiKeyGateway', function () {
        
         //echo json_encode($info);
 echo "Unauthorized";
+echo  Flight::request()->data->xapiKey;
 //echo json_encode($dta);
     }
 
