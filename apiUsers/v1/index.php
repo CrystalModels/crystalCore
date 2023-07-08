@@ -1260,7 +1260,7 @@ Flight::route('POST /validateLogIn/@headerslink', function ($headerslink) {
                             $browserdecode = base64_decode($browser);
 
                             $query2= mysqli_query($conectar,"UPDATE generalUsers SET sessionCounter='$counterLoged' where userName='$userName1'");
-                            $query2= mysqli_query($conectar,"INSERT INTO sessionList (sessionIdm,userName,sTime,sDate,sIp,browser) VALUES ('$primeros_ocho','$userName','$horaActual','$fechaActual','$ipAdd','$browserdecode')");
+                            $query2= mysqli_query($conectar,"INSERT INTO sessionList (sessionId,userName,sTime,sDate,sIp,browser) VALUES ('$primeros_ocho','$userName','$horaActual','$fechaActual','$ipAdd','$browserdecode')");
                   
                             echo "true";
                         } if($counterLoged>2 || $counterLoged <1){
