@@ -1227,6 +1227,8 @@ Flight::route('POST /validateLogIn/@headerslink', function ($headerslink) {
             
             $userName= Flight::request()->data->userName;
             $keyWord= Flight::request()->data->keyWord;
+            $ipAdd= Flight::request()->data->ipAdd;
+            $browser= Flight::request()->data->browser;
           
             $dato_encriptado = $encriptar($keyWord);
             $query1= mysqli_query($conectar,"SELECT userName FROM generalUsers where userName='$userName' and status=1 and companyMail not in('','null',' ','   ','0','@','.com')  and keyWord = '$dato_encriptado' and isActive=1 or internalMail='$userName' and status=1 and companyMail not in('','null',' ','   ','0','@','.com') and keyWord = '$dato_encriptado' and isActive=1 or companyMail='$userName' and status=1 and companyMail not in('','null',' ','   ','0','@','.com') and keyWord = '$dato_encriptado' and isActive=1");
@@ -1240,12 +1242,25 @@ Flight::route('POST /validateLogIn/@headerslink', function ($headerslink) {
                 if ($query1) {
                     while ($row = $query1->fetch_assoc()) {
                         
+
                        $countersession= $row['sessionCounter'];
                        $userName1= $row['userName'];
 
                        $counterLoged=$countersession +1;
                         if($counterLoged<=2 && $counterLoged >0){
+
+
+                            require('../../apiUsers/v1/model/modelSecurity/uuid/uuidd.php');
+    $con=new generateUuid();
+        $myuuid = $con->guidv4();
+        $primeros_ocho = substr($myuuid, 0, 8);
+                            date_default_timezone_set('America/Bogota');
+                            $horaActual = date('H:i:s');
+                            $fechaActual = date('Y-m-d');
+                            $browserdecode = base64_decode($browser);
+
                             $query2= mysqli_query($conectar,"UPDATE generalUsers SET sessionCounter='$counterLoged' where userName='$userName1'");
+                            $query2= mysqli_query($conectar,"INSERT INTO sessionList (sessionIdm,userName,sTime,sDate,sIp,browser) VALUES ('$primeros_ocho','$userName','$horaActual','$fechaActual','$ipAdd','$browserdecode')'");
                   
                             echo "true";
                         } if($counterLoged>2 || $counterLoged <1){
