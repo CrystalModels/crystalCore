@@ -1242,16 +1242,25 @@ Flight::route('POST /validateLogIn/@headerslink', function ($headerslink) {
                         
                        $countersession= $row['sessionCounter'];
                        $userName1= $row['userName'];
+
+                       $counterLoged=$countersession +1;
+                        if($counterLoged<=2 && $counterLoged >0){
+                            $query2= mysqli_query($conectar,"UPDATE generalUsers SET sessionCounter='$counterLoged' where userName='$userName1'");
+                  
+                            echo "true";
+                        } if($counterLoged>2 || $counterLoged <1){
+                          
+                            echo "Tienes 2 sesiones Activas, cierra sesión en algun dispositivo para continuar";
+                        }
+
                       // $userName2= $row['sessionCounter'];
-                        $counterLoged=$countersession +1;
+                      
                        
                        
                         
 
                        
-                        $query2= mysqli_query($conectar,"UPDATE generalUsers SET sessionCounter='$counterLoged' where userName='$userName1'");
-                  
-                        echo "true";
+                       
 
 
               
