@@ -1179,15 +1179,17 @@ if($code1==$code){
 
 
 Flight::route('POST /validateLogIn/@headerslink', function ($headerslink) {
-    header("Access-Control-Allow-Origin: *");
+     header("Access-Control-Allow-Origin: *");
     // Leer los encabezados
-    //$headers = getallheaders();
+    $headers = getallheaders();
     
     // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
-    if ($headerslink!="0") {
+    if (isset($headers['x-api-Key'])) {
         // Leer los datos de la solicitud
        
         // Acceder a los encabezados
+        
+        $xApiKey = $headers['x-api-Key'];
         
         
         
@@ -1311,46 +1313,49 @@ Flight::route('POST /validateLogIn/@headerslink', function ($headerslink) {
 
 
 
-Flight::route('POST /validateLogOut/', function () {
+Flight::route('POST /validateLogOut/@headerslink', function ($headerslink) {
     header("Access-Control-Allow-Origin: *");
-    // Leer los encabezados
-    $headers = getallheaders();
-    
-    // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
-    if (isset($headers['x-api-Key'])) {
-        // Leer los datos de la solicitud
+   // Leer los encabezados
+   $headers = getallheaders();
+   
+   // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
+   if (isset($headers['x-api-Key'])) {
+       // Leer los datos de la solicitud
+      
+       // Acceder a los encabezados
        
-        // Acceder a los encabezados
-        
-        $xApiKey = $headers['x-api-Key'];
-        
-        $sub_domaincon=new model_domain();
-        $sub_domain=$sub_domaincon->dom();
-        $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKeyLog/';
-      
-        $data = array(
-          'xApiKey' => $xApiKey
-          
-          );
-      $curl = curl_init();
-      
-      // Configurar las opciones de la sesión cURL
-      curl_setopt($curl, CURLOPT_URL, $url);
-      curl_setopt($curl, CURLOPT_POST, true);
-      curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-      // curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-      
-      // Ejecutar la solicitud y obtener la respuesta
-      $response1 = curl_exec($curl);
+       $xApiKey = $headers['x-api-Key'];
+       
+       
+       
+       $sub_domaincon=new model_domain();
+       $sub_domain=$sub_domaincon->dom();
+       $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKeyLog/';
+     
+       $data = array(
+         'xApiKey' => $headerslink
+         
+         );
+     $curl = curl_init();
+     $dta1=json_encode($data);
+     // Configurar las opciones de la sesión cURL
+     curl_setopt($curl, CURLOPT_URL, $url);
+     curl_setopt($curl, CURLOPT_POST, true);
+     curl_setopt($curl, CURLOPT_POSTFIELDS, $dta1);
+     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+     curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+     
+     // Ejecutar la solicitud y obtener la respuesta
+     $response1 = curl_exec($curl);
 
-      
-
-
-      curl_close($curl);
+     
 
 
-        // Realizar acciones basadas en los valores de los encabezados
+     curl_close($curl);
+
+
+       // Realizar acciones basadas en los valores de los encabezados
+
 
 
         if ($response1 == 'true' ) {
@@ -1359,6 +1364,7 @@ Flight::route('POST /validateLogOut/', function () {
 
             
             $profileid= Flight::request()->data->profileId;
+            $sessionId= Flight::request()->data->sessionId;
           
             
             $query= mysqli_query($conectar,"SELECT userName FROM generalUsers where profileId='$profileid'");
@@ -1382,6 +1388,7 @@ Flight::route('POST /validateLogOut/', function () {
 
                        
                         $query2= mysqli_query($conectar,"UPDATE generalUsers SET sessionCounter='$counterLoged' where userName='$userName1'");
+                        $query2= mysqli_query($conectar,"DELETE FROM sessionList where sessionId='$sessionId'");
                   
                         echo "true";
 
@@ -2661,7 +2668,7 @@ Flight::route('GET /getOneUserByAdmin/@adminId/@profileId', function ($adminId,$
 
 
 
-Flight::route('GET /getProfileInfoLog/@userName/', function ($userName) {
+Flight::route('GET /getProfileInfoLog/@userName/@sessionId', function ($userName,$sessionId) {
     header("Access-Control-Allow-Origin: *");
     // Leer los encabezados
     $headers = getallheaders();
@@ -2713,7 +2720,7 @@ Flight::route('GET /getProfileInfoLog/@userName/', function ($userName) {
             $conectar=conn();
             
           
-            $query= mysqli_query($conectar,"SELECT u.userId,u.personalMail,u.companyMail,u.internalMail,u.userName,u.sessionCounter,p.profileId,p.name,p.lastName,p.imageUrl,p.totalHours,r.name as rol,t.ranCode,u.isActive,u.status FROM generalUsers u JOIN generalProfiles p ON p.profileId=u.profileId JOIN roles r ON r.rolId=p.rolId JOIN apiTokens t ON t.userId=u.userId where u.userName='$userName' or u.companyMail='$userName' or u.internalMail='$userName'");
+            $query= mysqli_query($conectar,"SELECT u.userId,u.personalMail,u.companyMail,u.internalMail,u.userName,u.sessionCounter,p.profileId,p.name,p.lastName,p.imageUrl,p.totalHours,r.name as rol,t.ranCode,u.isActive,u.status FROM generalUsers u JOIN generalProfiles p ON p.profileId=u.profileId JOIN roles r ON r.rolId=p.rolId JOIN apiTokens t ON t.userId=u.userId JOIN sessionlIST sl ON sl.userName=u.userName where u.userName='$userName' or u.companyMail='$userName' or u.internalMail='$userName' and sl.sessionId='$sessionId'");
                
           
                 $values=[];
