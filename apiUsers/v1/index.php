@@ -1262,7 +1262,7 @@ Flight::route('POST /validateLogIn/@headerslink', function ($headerslink) {
                             $query2= mysqli_query($conectar,"UPDATE generalUsers SET sessionCounter='$counterLoged' where userName='$userName1'");
                             $query2= mysqli_query($conectar,"INSERT INTO sessionList (sessionId,userName,sTime,sDate,sIp,browser) VALUES ('$primeros_ocho','$userName','$horaActual','$fechaActual','$ipAdd','$browserdecode')");
                   
-                            echo "true";
+                            echo "true ".$primeros_ocho;
                         } if($counterLoged>2 || $counterLoged <1){
                           
                             echo "Tienes 2 sesiones Activas, cierra sesión en algun dispositivo para continuar";
