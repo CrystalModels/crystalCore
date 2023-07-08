@@ -98,7 +98,7 @@ Flight::route('POST /authApiKeyGateway', function () {
     }else{
        
         //echo json_encode($info);
-echo "Unauthorized1";
+echo "Unauthorized";
 //echo json_encode($dta);
     }
 
