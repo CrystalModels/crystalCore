@@ -1310,18 +1310,11 @@ Flight::route('POST /validateLogIn/@headerslink', function ($headerslink) {
 
 Flight::route('POST /validateLogOut/@headerslink', function ($headerslink) {
     header("Access-Control-Allow-Origin: *");
-   // Leer los encabezados
-   $headers = getallheaders();
-   
-   // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
-   if (isset($headers['x-api-Key'])) {
-       // Leer los datos de la solicitud
-      
-       // Acceder a los encabezados
-       
-       $xApiKey = $headers['x-api-Key'];
-       
-       
+    header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+    header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+    
+    // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
+    if (!empty($headerslink)) {
        
        $sub_domaincon=new model_domain();
        $sub_domain=$sub_domaincon->dom();
