@@ -1168,12 +1168,12 @@ Flight::route('POST /forgotKeywordValidate/@headerslink', function ($headerslink
                
           
                 if ($query1) {
-                    while ($row = $query->fetch_assoc()) {
+                    while ($row = $query1->fetch_assoc()) {
                         
 
                         $uname= $row['userName'];               
 $code1= $row['validationCode'];
-//$cmail= $row['companyMail'];
+$cmail= $row['companyMail'];
 $pmail= $row['personalMail'];
                 
 
