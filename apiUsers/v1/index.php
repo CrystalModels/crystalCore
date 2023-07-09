@@ -1376,7 +1376,7 @@ Flight::route('POST /validateLogOut/@headerslink', function ($headerslink) {
 
                        
                         $query2= mysqli_query($conectar,"UPDATE generalUsers SET sessionCounter='$counterLoged' where userName='$userName1'");
-                        $query2= mysqli_query($conectar,"DELETE FROM sessionList where sessionId='$sessionId'");
+                        $query2= mysqli_query($conectar,"UPDATE sessionList SET isActive=0 where sessionId='$sessionId'");
                   
                         echo "true";
 
@@ -2708,7 +2708,7 @@ Flight::route('GET /getProfileInfoLog/@userName/@sessionId/', function ($userNam
             $conectar=conn();
             
           
-            $query= mysqli_query($conectar,"SELECT u.userId,u.personalMail,u.companyMail,u.internalMail,u.userName,u.sessionCounter,p.profileId,p.name,p.lastName,p.imageUrl,p.totalHours,r.name as rol,t.ranCode,u.isActive,u.status FROM generalUsers u JOIN generalProfiles p ON p.profileId=u.profileId JOIN roles r ON r.rolId=p.rolId JOIN apiTokens t ON t.userId=u.userId JOIN sessionList sl ON sl.userName=u.userName where u.userName='$userName' and sl.sessionId='$sessionId'");
+            $query= mysqli_query($conectar,"SELECT u.userId,u.personalMail,u.companyMail,u.internalMail,u.userName,u.sessionCounter,p.profileId,p.name,p.lastName,p.imageUrl,p.totalHours,r.name as rol,t.ranCode,u.isActive,u.status,sl.isActive as sessionStatus FROM generalUsers u JOIN generalProfiles p ON p.profileId=u.profileId JOIN roles r ON r.rolId=p.rolId JOIN apiTokens t ON t.userId=u.userId JOIN sessionList sl ON sl.userName=u.userName where u.userName='$userName' and sl.sessionId='$sessionId'");
                
           
                 $values=[];
@@ -2730,7 +2730,8 @@ Flight::route('GET /getProfileInfoLog/@userName/@sessionId/', function ($userNam
                             'rol' => $row['rol'],
                             'ranCode' => $row['ranCode'],
                             'isActive' => $row['isActive'],
-                            'status' => $row['status']
+                            'status' => $row['status'],
+                            'sessionStatus' => $row['sessionStatus']
                         ];
                         
                         array_push($values,$value);
