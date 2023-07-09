@@ -1179,19 +1179,14 @@ if($code1==$code){
 
 
 Flight::route('POST /validateLogIn/@headerslink', function ($headerslink) {
-     header("Access-Control-Allow-Origin: *");
-    // Leer los encabezados
-    $headers = getallheaders();
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+    header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
     
     // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
-    if (isset($headers['x-api-Key'])) {
-        // Leer los datos de la solicitud
+    if (!empty($headerslink)) {
+    
        
-        // Acceder a los encabezados
-        
-        $xApiKey = $headers['x-api-Key'];
-        
-        
         
         $sub_domaincon=new model_domain();
         $sub_domain=$sub_domaincon->dom();
