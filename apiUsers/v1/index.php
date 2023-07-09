@@ -2997,7 +2997,7 @@ Flight::route('GET /getSessions/@headerslink/@userName', function ($headerslink,
                 }
                 $row=$query->fetch_assoc();
                 //echo json_encode($students) ;
-                echo json_encode(['rooms'=>$values]);
+                echo json_encode(['session'=>$values]);
           
                
            
