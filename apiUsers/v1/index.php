@@ -1383,6 +1383,136 @@ Flight::route('POST /validateLogIn/@headerslink', function ($headerslink) {
 
 
 
+Flight::route('POST /validateLogInChange/@headerslink', function ($headerslink) {
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+    header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+    
+    // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
+    if (!empty($headerslink)) {
+    
+       
+        
+        $sub_domaincon=new model_domain();
+        $sub_domain=$sub_domaincon->dom();
+        $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKeyLog/';
+      
+        $data = array(
+          'xApiKey' => $headerslink
+          
+          );
+      $curl = curl_init();
+      $dta1=json_encode($data);
+      // Configurar las opciones de la sesión cURL
+      curl_setopt($curl, CURLOPT_URL, $url);
+      curl_setopt($curl, CURLOPT_POST, true);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $dta1);
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+      
+      // Ejecutar la solicitud y obtener la respuesta
+      $response1 = curl_exec($curl);
+
+      
+
+
+      curl_close($curl);
+
+
+        // Realizar acciones basadas en los valores de los encabezados
+
+
+        if ($response1 == 'true' ) {
+            $conectar=conn();
+            require_once '../../apiUsers/v1/model/modelSecurity/crypt/cryptic.php';
+
+            
+            $userName= Flight::request()->data->userName;
+            $keyWord= Flight::request()->data->keyWord;
+            $ipAdd= Flight::request()->data->ipAdd;
+            $browser= Flight::request()->data->browser;
+          
+            $dato_encriptado = $encriptar($keyWord);
+            $query1= mysqli_query($conectar,"SELECT userName FROM generalUsers where userName='$userName' and status=1 and companyMail not in('','null',' ','   ','0','@','.com')  and keyWord = '$dato_encriptado' and isActive=1 or internalMail='$userName' and status=1 and companyMail not in('','null',' ','   ','0','@','.com') and keyWord = '$dato_encriptado' and isActive=1 or companyMail='$userName' and status=1 and companyMail not in('','null',' ','   ','0','@','.com') and keyWord = '$dato_encriptado' and isActive=1");
+            $nr=mysqli_num_rows($query1);
+        
+            if($nr>=1){
+    
+                $query1= mysqli_query($conectar,"SELECT sessionCounter,userName FROM generalUsers where userName='$userName' or companyMail='$userName' or internalMail='$userName'");
+               
+          
+                if ($query1) {
+                    while ($row = $query1->fetch_assoc()) {
+                        
+
+                       $countersession= $row['sessionCounter'];
+                       $userName1= $row['userName'];
+
+                       $counterLoged=$countersession +1;
+                        if($counterLoged>2 ){
+
+
+                            require('../../apiUsers/v1/model/modelSecurity/uuid/uuidd.php');
+    $con=new generateUuid();
+        $myuuid = $con->guidv4();
+        $primeros_ocho = substr($myuuid, 0, 8);
+                            date_default_timezone_set('America/Bogota');
+                            $horaActual = date('H:i:s');
+                            $fechaActual = date('Y-m-d');
+                            $browserdecode = base64_decode($browser);
+
+                            $query2= mysqli_query($conectar,"UPDATE generalUsers SET sessionCounter='$counterLoged' where userName='$userName1'");
+                            $query2= mysqli_query($conectar,"INSERT INTO sessionList (sessionId,userName,sTime,sDate,sIp,browser) VALUES ('$primeros_ocho','$userName','$horaActual','$fechaActual','$ipAdd','$browserdecode')");
+                  
+                            echo "true ".$primeros_ocho;
+                        } if($counterLoged<2){
+                          
+                            echo "Tienes 1 sesion Activa";
+                        }
+
+                      // $userName2= $row['sessionCounter'];
+                      
+                       
+                       
+                        
+
+                       
+                       
+
+
+              
+                    }
+                } else {
+                    // Manejar el error de la consulta
+                    echo "Error en la consulta: " . mysqli_error($conectar);
+                }
+          
+
+            }else{
+
+                echo "false";
+               // echo $keyWord;
+            }
+}else {
+    
+    echo 'Error: Autenticación fallida';
+}
+
+
+
+
+           
+          
+           // echo json_encode($response1);
+        } else {
+            echo 'Error: Encabezados faltantes';
+            
+             //echo json_encode($response1);
+        }
+});
+
+
+
 Flight::route('POST /validateLogOut/@headerslink', function ($headerslink) {
     header("Access-Control-Allow-Origin: *");
     header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
@@ -2807,6 +2937,104 @@ Flight::route('GET /getProfileInfoLog/@userName/@sessionId/', function ($userNam
                             'isActive' => $row['isActive'],
                             'status' => $row['status'],
                             'sessionStatus' => $row['sessionStatus']
+                        ];
+                        
+                        array_push($values,$value);
+                        
+                }
+                $row=$query->fetch_assoc();
+                //echo json_encode($students) ;
+                echo json_encode(['users'=>$values]);
+          
+               
+           
+
+
+        } else {
+            echo 'Error: Autenticación fallida';
+             //echo json_encode($response1);
+        }
+    } else {
+        echo 'Error: Encabezados faltantes';
+    }
+});
+
+
+Flight::route('GET /getProfileInfoLogChange/@userName/', function ($userName) {
+    header("Access-Control-Allow-Origin: *");
+    // Leer los encabezados
+    $headers = getallheaders();
+    
+    // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
+    if (isset($headers['x-api-Key'])) {
+        // Leer los datos de la solicitud
+       
+        // Acceder a los encabezados
+        
+        $xApiKey = $headers['x-api-Key'];
+        
+        $sub_domaincon=new model_domain();
+        $sub_domain=$sub_domaincon->dom();
+        $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKeyLog/';
+      
+        $data = array(
+          'xApiKey' => $xApiKey
+          
+          );
+      $curl = curl_init();
+      
+      // Configurar las opciones de la sesión cURL
+      curl_setopt($curl, CURLOPT_URL, $url);
+      curl_setopt($curl, CURLOPT_POST, true);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      // curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+      
+      // Ejecutar la solicitud y obtener la respuesta
+      $response1 = curl_exec($curl);
+
+      
+
+
+      curl_close($curl);
+
+      
+
+        // Realizar acciones basadas en los valores de los encabezados
+
+
+        if ($response1 == 'true' ) {
+           
+
+
+
+           
+            $conectar=conn();
+            
+          
+            $query= mysqli_query($conectar,"SELECT u.userId,u.personalMail,u.companyMail,u.internalMail,u.userName,u.sessionCounter,p.profileId,p.name,p.lastName,p.imageUrl,p.totalHours,r.name as rol,t.ranCode,u.isActive,u.status FROM generalUsers u JOIN generalProfiles p ON p.profileId=u.profileId JOIN roles r ON r.rolId=p.rolId JOIN apiTokens t ON t.userId=u.userId where u.userName='$userName'");
+               
+          
+                $values=[];
+          
+                while($row = $query->fetch_assoc())
+                {
+                        $value=[
+                            'userId' => $row['userId'],
+                            'personalMail' => $row['personalMail'],
+                            'companyMail' => $row['companyMail'],
+                            'internalMail' => $row['internalMail'],
+                            'userName' => $row['userName'],
+                            'sessionCounter' => $row['sessionCounter'],
+                            'profileId' => $row['profileId'],
+                            'name' => $row['name'],
+                            'lastName' => $row['lastName'],
+                            'imageUrl' => $row['imageUrl'],
+                            'totalHours' => $row['totalHours'],
+                            'rol' => $row['rol'],
+                            'ranCode' => $row['ranCode'],
+                            'isActive' => $row['isActive'],
+                            'status' => $row['status']
                         ];
                         
                         array_push($values,$value);
