@@ -2927,5 +2927,107 @@ Flight::route('GET /getAllUsersGeneral/@profileId', function ($profileId) {
 });
 
 
+Flight::route('GET /getSessions/@headerslink/@userName', function ($headerslink,$userName) {
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+    header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+    
+    // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
+    if (!empty($headerslink)) {
+    
+       
+        
+        $sub_domaincon=new model_domain();
+        $sub_domain=$sub_domaincon->dom();
+        $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKeyLog/';
+      
+        $data = array(
+          'xApiKey' => $headerslink
+          
+          );
+      $curl = curl_init();
+      $dta1=json_encode($data);
+      // Configurar las opciones de la sesión cURL
+      curl_setopt($curl, CURLOPT_URL, $url);
+      curl_setopt($curl, CURLOPT_POST, true);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $dta1);
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+      
+      // Ejecutar la solicitud y obtener la respuesta
+      $response1 = curl_exec($curl);
+
+      
+
+
+      curl_close($curl);
+
+
+        // Realizar acciones basadas en los valores de los encabezados
+
+        // Realizar acciones basadas en los valores de los encabezados
+
+
+        if ($response1 == 'true' ) {
+           
+
+
+
+           
+            $conectar=conn();
+            
+          
+            $query= mysqli_query($conectar,"SELECT sessionId,userName,sTime,sDate,browser FROM sessionList where isActive=1 and userName='$userName'");
+               
+          
+                $values=[];
+          
+                while($row = $query->fetch_assoc())
+                {
+                        $value=[
+                            'sessionId' => $row['sessionId'],
+                            'userName' => $row['userName'],
+                            'time' => $row['sTime'],
+                            'date' => $row['sDate'],
+                            'browser' => $row['browser']
+                        ];
+                        
+                        array_push($values,$value);
+                        
+                }
+                $row=$query->fetch_assoc();
+                //echo json_encode($students) ;
+                echo json_encode(['rooms'=>$values]);
+          
+               
+           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        } else {
+            echo 'Error: Autenticación fallida';
+             //echo json_encode($response1);
+        }
+    } else {
+        echo 'Error: Encabezados faltantes';
+    }
+});
+
+
+
 
 Flight::start();
