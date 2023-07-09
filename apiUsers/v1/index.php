@@ -1173,7 +1173,7 @@ Flight::route('POST /forgotKeywordValidate/@headerslink', function ($headerslink
 
                         
 $code1= $row['validationCode'];
-$cmail= $row['companyMail'];
+//$cmail= $row['companyMail'];
 $pmail= $row['personalMail'];
                 
 $uname= $row['userName'];
