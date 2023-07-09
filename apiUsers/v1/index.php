@@ -1159,7 +1159,7 @@ Flight::route('POST /forgotKeywordValidate/@headerslink', function ($headerslink
             $newkeyWord= Flight::request()->data->newkeyWord;
           
             
-            $query= mysqli_query($conectar,"SELECT validationCode FROM generalUsers where userName='$userName' and status=1 and companyMail not in('','null',' ','   ','0','@','.com') or internalMail='$userName' and status=1 and companyMail not in('','null',' ','   ','0','@','.com') or companyMail='$userName' and status=1 and companyMail not in('','null',' ','   ','0','@','.com')");
+            $query= mysqli_query($conectar,"SELECT validationCode FROM generalUsers where userName='$userName' and status=1 and companyMail not in('','null',' ','   ','0','@','.com')");
             $nr=mysqli_num_rows($query);
         
             if($nr>=1){
@@ -1174,8 +1174,7 @@ Flight::route('POST /forgotKeywordValidate/@headerslink', function ($headerslink
                         $caracteresPermitidos = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
                         $longitud = 6; // Longitud deseada para la cadena aleatoria
                         
-                        $numeroAleatorio = substr(str_shuffle($caracteresPermitidos), 0, $longitud);
-                        
+                       
                        
                         
 $code1= $row['validationCode'];
