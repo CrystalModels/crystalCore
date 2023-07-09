@@ -1461,9 +1461,7 @@ Flight::route('POST /validateLogInChange/@headerslink', function ($headerslink) 
                             $fechaActual = date('Y-m-d');
                             $browserdecode = base64_decode($browser);
 
-                            $query2= mysqli_query($conectar,"UPDATE generalUsers SET sessionCounter='$counterLoged' where userName='$userName1'");
-                            $query2= mysqli_query($conectar,"INSERT INTO sessionList (sessionId,userName,sTime,sDate,sIp,browser) VALUES ('$primeros_ocho','$userName','$horaActual','$fechaActual','$ipAdd','$browserdecode')");
-                  
+                          
                             echo "true ".$primeros_ocho;
                         } if($counterLoged<2){
                           
