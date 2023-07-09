@@ -567,9 +567,9 @@ Flight::route('POST /putUserStatusBySuperAdmin/@apk/@xapk', function ($apk,$xapk
 
         if ($response1 == 'true' ) {
 
-
+                  
     $conectar=conn();
-
+         
     if($value=="act"){
 
         $query2= mysqli_query($conectar,"UPDATE generalProfiles set isActive=1 where profileId='$profileId'");
@@ -580,7 +580,9 @@ Flight::route('POST /putUserStatusBySuperAdmin/@apk/@xapk', function ($apk,$xapk
     if($value=="dec"){
         $query2= mysqli_query($conectar,"UPDATE generalProfiles set isActive=0 where profileId='$profileId'");
              
-        $query2= mysqli_query($conectar,"UPDATE generalUsers set isActive=0 where profileId='$profileId'");
+        $query2= mysqli_query($conectar,"UPDATE generalUsers set isActive=0,sessionCounter=0 where profileId='$profileId'");
+        $query2= mysqli_query($conectar,"UPDATE sessionList SET isActive=0 where userName IN (SELECT userName from generalUsers where profileId='$profileId')");
+    
         echo "true";
     }
     if($value=="sho"){
@@ -592,8 +594,42 @@ Flight::route('POST /putUserStatusBySuperAdmin/@apk/@xapk', function ($apk,$xapk
     if($value=="hid"){
         $query2= mysqli_query($conectar,"UPDATE generalProfiles set isActive=0,status=0 where profileId='$profileId'");
              
-        $query2= mysqli_query($conectar,"UPDATE generalUsers set isActive=0,status=0 where profileId='$profileId'");
-        echo "true";
+        $query2= mysqli_query($conectar,"UPDATE generalUsers set isActive=0,status=0,sessionCounter=0 where profileId='$profileId'");
+        $query2= mysqli_query($conectar,"UPDATE sessionList SET isActive=0 where userName IN (SELECT userName from generalUsers where profileId='$profileId')");
+    
+
+
+        
+        $query1= mysqli_query($conectar,"SELECT name,lastName,companyMail FROM generalUsers where profileId='$profileId'");
+               
+          
+        if ($query1) {
+            while ($row = $query1->fetch_assoc()) {
+                
+
+               $name= $row['userName'];
+               $lname= $row['lastName'];
+               $companym= $row['companyMail'];
+ini_set( 'display_errors', 1 );
+error_reporting( E_ALL );
+$from = "no-responder@crystalmodels.online";
+$to = "soporte@crystalmodels.online";
+$subject = "Usuario Oculto";
+
+$message = 'Eliminar o Desactivar correo Empresarial.   '.$companym;
+$message = 'Para el usuario: '.$name.' '.$lname;
+
+
+$headers = "From:" . $from;
+mail($to,$subject,$message, $headers);
+
+
+}
+            echo "true";
+        }else{
+            echo "true";
+            }
+        
     }
                        
  
