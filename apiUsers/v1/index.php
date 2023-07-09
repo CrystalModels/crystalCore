@@ -600,7 +600,7 @@ Flight::route('POST /putUserStatusBySuperAdmin/@apk/@xapk', function ($apk,$xapk
 
 
         
-        $query1= mysqli_query($conectar,"SELECT p.name,p.lastName,u.companyMail FROM generalUsers u JOIN generalProfiles p ON p.profileId=u.profileId where p.profileId='$profileId'");
+        $query1= mysqli_query($conectar,"SELECT p.name,p.lastName,u.companyMail,u.personalMail FROM generalUsers u JOIN generalProfiles p ON p.profileId=u.profileId where p.profileId='$profileId'");
                
           
         if ($query1) {
@@ -610,13 +610,29 @@ Flight::route('POST /putUserStatusBySuperAdmin/@apk/@xapk', function ($apk,$xapk
                $name= $row['name'];
                $lname= $row['lastName'];
                $companym= $row['companyMail'];
+               $personalm= $row['personalMail'];
 ini_set( 'display_errors', 1 );
 error_reporting( E_ALL );
 $from = "no-responder@crystalmodels.online";
-$to = "soporte@crystalmodels.online";
+$to = $personalm;
 $subject = "Usuario Oculto";
 
 $message = 'Eliminar o Desactivar correo Empresarial.   '.$companym.' Para el usuario: '.$name.' '.$lname;
+
+
+
+$headers = "From:" . $from;
+mail($to,$subject,$message, $headers);
+
+
+
+ini_set( 'display_errors', 1 );
+error_reporting( E_ALL );
+$from = "no-responder@crystalmodels.online";
+$to = $personalm;
+$subject = "Usuario Desactivado";
+
+$message = 'Tu usuario fue desactivado temporalmente.';
 
 
 
