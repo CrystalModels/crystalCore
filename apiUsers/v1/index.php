@@ -581,7 +581,7 @@ Flight::route('POST /putUserStatusBySuperAdmin/@apk/@xapk', function ($apk,$xapk
         $query2= mysqli_query($conectar,"UPDATE generalProfiles set isActive=0 where profileId='$profileId'");
              
         $query2= mysqli_query($conectar,"UPDATE generalUsers set isActive=0,sessionCounter=0 where profileId='$profileId'");
-        $query2= mysqli_query($conectar,"UPDATE sessionList SET isActive=0 where userName IN (SELECT userName from generalUsers where profileId='$profileId')");
+        $query2= mysqli_query($conectar,"UPDATE sessionList SET isActive=0 where userName IN (SELECT userName from generalUsers where profileId='$profileId') and isActive=1");
     
         echo "true";
     }
@@ -595,7 +595,7 @@ Flight::route('POST /putUserStatusBySuperAdmin/@apk/@xapk', function ($apk,$xapk
         $query2= mysqli_query($conectar,"UPDATE generalProfiles set isActive=0,status=0 where profileId='$profileId'");
              
         $query2= mysqli_query($conectar,"UPDATE generalUsers set isActive=0,status=0,sessionCounter=0 where profileId='$profileId'");
-        $query2= mysqli_query($conectar,"UPDATE sessionList SET isActive=0 where userName IN (SELECT userName from generalUsers where profileId='$profileId')");
+        $query2= mysqli_query($conectar,"UPDATE sessionList SET isActive=0 where userName IN (SELECT userName from generalUsers where profileId='$profileId') and isActive=1");
     
 
 
@@ -981,35 +981,32 @@ Flight::route('POST /putKeyword/@profileId/', function ($profileId) {
 
 
 
-Flight::route('POST /forgotKeyword/', function () {
+Flight::route('POST /forgotKeyword/@headerslink', function ($headerslink) {
     header("Access-Control-Allow-Origin: *");
-    // Leer los encabezados
-    $headers = getallheaders();
+    header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+    header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
     
     // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
-    if (isset($headers['x-api-Key'])) {
-        // Leer los datos de la solicitud
+    if (!empty($headerslink)) {
+    
        
-        // Acceder a los encabezados
-        
-        $xApiKey = $headers['x-api-Key'];
         
         $sub_domaincon=new model_domain();
         $sub_domain=$sub_domaincon->dom();
         $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKeyLog/';
       
         $data = array(
-          'xApiKey' => $xApiKey
+          'xApiKey' => $headerslink
           
           );
       $curl = curl_init();
-      
+      $dta1=json_encode($data);
       // Configurar las opciones de la sesión cURL
       curl_setopt($curl, CURLOPT_URL, $url);
       curl_setopt($curl, CURLOPT_POST, true);
-      curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $dta1);
       curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-      // curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+      curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
       
       // Ejecutar la solicitud y obtener la respuesta
       $response1 = curl_exec($curl);
@@ -1020,9 +1017,6 @@ Flight::route('POST /forgotKeyword/', function () {
       curl_close($curl);
 
 
-        // Realizar acciones basadas en los valores de los encabezados
-
-
         if ($response1 == 'true' ) {
             $conectar=conn();
             require_once '../../apiUsers/v1/model/modelSecurity/crypt/cryptic.php';
@@ -1030,7 +1024,7 @@ Flight::route('POST /forgotKeyword/', function () {
             $userName= Flight::request()->data->userName;
           
             
-            $query= mysqli_query($conectar,"SELECT companyMail FROM generalUsers where userName='$userName' and status=1 and companyMail not in('','null',' ','   ','0','@','.com') or internalMail='$userName' and status=1 and companyMail not in('','null',' ','   ','0','@','.com') or companyMail='$userName' and status=1 and companyMail not in('','null',' ','   ','0','@','.com')");
+            $query= mysqli_query($conectar,"SELECT companyMail FROM generalUsers where userName='$userName' and status=1 and companyMail not in('','null',' ','   ','0','@','.com')");
             $nr=mysqli_num_rows($query);
         
             if($nr>=1){
@@ -1068,6 +1062,22 @@ $userMail= $row['companyMail'];
                         */
                   $query2= mysqli_query($conectar,"UPDATE generalUsers SET validationCode='$numeroAleatorio' where companyMail='$userMail'");
                   
+
+                  $sub_domaincon=new model_domain();
+                  $sub_domain=$sub_domaincon->dom_mail();
+ini_set( 'display_errors', 1 );
+error_reporting( E_ALL );
+$from = "no-responder@crystalmodels.online";
+$to = $userMail;
+$subject = "Código de Validación";
+
+$message = 'Tu código de validación es: '.$numeroAleatorio.' Ingresa este código para recuperar tu contrasena. Ingresa a-> '.$sub_domain.'/crystal/validationCode.php';
+
+
+
+$headers = "From:" . $from;
+mail($to,$subject,$message, $headers);
+
                  
                     }
                 } else {
@@ -1103,35 +1113,32 @@ $userMail= $row['companyMail'];
 
 
 
-Flight::route('POST /forgotKeywordValidate/', function () {
+Flight::route('POST /forgotKeywordValidate/@headerslink', function ($headerslink) {
     header("Access-Control-Allow-Origin: *");
-    // Leer los encabezados
-    $headers = getallheaders();
+    header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+    header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
     
     // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
-    if (isset($headers['x-api-Key'])) {
-        // Leer los datos de la solicitud
+    if (!empty($headerslink)) {
+    
        
-        // Acceder a los encabezados
-        
-        $xApiKey = $headers['x-api-Key'];
         
         $sub_domaincon=new model_domain();
         $sub_domain=$sub_domaincon->dom();
         $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKeyLog/';
       
         $data = array(
-          'xApiKey' => $xApiKey
+          'xApiKey' => $headerslink
           
           );
       $curl = curl_init();
-      
+      $dta1=json_encode($data);
       // Configurar las opciones de la sesión cURL
       curl_setopt($curl, CURLOPT_URL, $url);
       curl_setopt($curl, CURLOPT_POST, true);
-      curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $dta1);
       curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-      // curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+      curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
       
       // Ejecutar la solicitud y obtener la respuesta
       $response1 = curl_exec($curl);
@@ -1140,8 +1147,6 @@ Flight::route('POST /forgotKeywordValidate/', function () {
 
 
       curl_close($curl);
-
-
         // Realizar acciones basadas en los valores de los encabezados
 
 
@@ -1159,7 +1164,7 @@ Flight::route('POST /forgotKeywordValidate/', function () {
         
             if($nr>=1){
     
-                $query1= mysqli_query($conectar,"SELECT validationCode FROM generalUsers where userName='$userName'");
+                $query1= mysqli_query($conectar,"SELECT userName,validationCode,companyMail,personalMail FROM generalUsers where userName='$userName'");
                
           
                 if ($query1) {
@@ -1174,25 +1179,49 @@ Flight::route('POST /forgotKeywordValidate/', function () {
                        
                         
 $code1= $row['validationCode'];
-if($code1==$code){
- /*
-                   
-
-                    ini_set( 'display_errors', 1 );
-                    error_reporting( E_ALL );
-                    $from = "no-responder@crystalmodels.online";
-                    $to = $userMail;
-                    $subject = "Código de Validación";
-                    
-                $message .= "TU CÓDIGO DE VALIDACIÓN ES: ";
+$cmail= $row['companyMail'];
+$pmail= $row['personalMail'];
                 
-                     $headers = "From:" . $from;
-                    mail($to,$subject,$message, $headers);
-                  //  echo "The email message was sent.";
-                        */
+$uname= $row['userName'];
+if($code1==$code){
+
                         $dato_encriptado = $encriptar($newkeyWord);
                         $query2= mysqli_query($conectar,"UPDATE generalUsers SET keyWord='$dato_encriptado',validationCode='0' where userName='$userName'");
-                  
+                        $query2= mysqli_query($conectar,"UPDATE sessionList SET isActive=0 where userName='$uname' and isActive=1");
+    
+
+                        date_default_timezone_set('America/Bogota');
+
+                        // Obtener la fecha y hora actual en Colombia
+                        $fechaActual = date('Y-m-d H:i:s');
+
+                        ini_set( 'display_errors', 1 );
+error_reporting( E_ALL );
+$from = "no-responder@crystalmodels.online";
+$to = $cmail;
+$subject = "Contrasena Editada";
+
+$message = 'Tu contrasena fue editada correctamente el '.$fechaActual;
+
+
+
+$headers = "From:" . $from;
+mail($to,$subject,$message, $headers);
+
+                 
+error_reporting( E_ALL );
+$from = "no-responder@crystalmodels.online";
+$to = $pmail;
+$subject = "Contrasena Editada";
+
+$message = 'Tu contrasena fue editada correctamente el: '.$fechaActual;
+
+
+
+$headers = "From:" . $from;
+mail($to,$subject,$message, $headers);
+
+
                         echo "true";
 }else{
 
