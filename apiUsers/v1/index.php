@@ -616,7 +616,7 @@ $from = "no-responder@crystalmodels.online";
 $to = "soporte@crystalmodels.online";
 $subject = "Usuario Oculto";
 
-$message = 'Eliminar o Desactivar correo Empresarial.   '.$companym;
+$message = 'Eliminar o Desactivar correo Empresarial.   '.$companym.' Para el usuario: '.$name.' '.$lname;
 $message = 'Para el usuario: '.$name.' '.$lname;
 
 
