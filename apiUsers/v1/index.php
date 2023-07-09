@@ -1180,8 +1180,8 @@ $pmail= $row['personalMail'];
 if($code1==$code){
 
                         $dato_encriptado = $encriptar($newkeyWord);
-                        $query2= mysqli_query($conectar,"UPDATE generalUsers SET keyWord='$dato_encriptado',validationCode='0' where userName='$userName'");
-                        $query2= mysqli_query($conectar,"UPDATE sessionList SET isActive=0 where userName='$uname' and isActive=1");
+                        $query2= mysqli_query($conectar,"UPDATE generalUsers SET keyWord='$dato_encriptado',validationCode='0',sessionCounter=0 where userName='$userName'");
+                        $query3= mysqli_query($conectar,"UPDATE sessionList SET isActive=0 where userName='$uname'");
     
 
                         date_default_timezone_set('America/Bogota');
