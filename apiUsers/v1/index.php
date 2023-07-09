@@ -2968,7 +2968,7 @@ Flight::route('GET /getSessions/@headerslink/@userName', function ($headerslink,
         // Realizar acciones basadas en los valores de los encabezados
 
 
-        if ($response1 == 'true' ) {
+        if ($response1 != 'fase' ) {
            
 
 
