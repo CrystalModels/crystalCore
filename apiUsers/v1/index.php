@@ -2668,7 +2668,7 @@ Flight::route('GET /getOneUserByAdmin/@adminId/@profileId', function ($adminId,$
 
 
 
-Flight::route('GET /getProfileInfoLog/@userName/@sessionId', function ($userName,$sessionId) {
+Flight::route('GET /getProfileInfoLog/@userName/@sessionId/', function ($userName,$sessionId) {
     header("Access-Control-Allow-Origin: *");
     // Leer los encabezados
     $headers = getallheaders();
@@ -2720,7 +2720,7 @@ Flight::route('GET /getProfileInfoLog/@userName/@sessionId', function ($userName
             $conectar=conn();
             
           
-            $query= mysqli_query($conectar,"SELECT u.userId,u.personalMail,u.companyMail,u.internalMail,u.userName,u.sessionCounter,p.profileId,p.name,p.lastName,p.imageUrl,p.totalHours,r.name as rol,t.ranCode,u.isActive,u.status FROM generalUsers u JOIN generalProfiles p ON p.profileId=u.profileId JOIN roles r ON r.rolId=p.rolId JOIN apiTokens t ON t.userId=u.userId JOIN sessionlIST sl ON sl.userName=u.userName where u.userName='$userName' and sl.sessionId='$sessionId'");
+            $query= mysqli_query($conectar,"SELECT u.userId,u.personalMail,u.companyMail,u.internalMail,u.userName,u.sessionCounter,p.profileId,p.name,p.lastName,p.imageUrl,p.totalHours,r.name as rol,t.ranCode,u.isActive,u.status FROM generalUsers u JOIN generalProfiles p ON p.profileId=u.profileId JOIN roles r ON r.rolId=p.rolId JOIN apiTokens t ON t.userId=u.userId JOIN sessionList sl ON sl.userName=u.userName where u.userName='$userName' and sl.sessionId='$sessionId'");
                
           
                 $values=[];
