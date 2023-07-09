@@ -614,7 +614,7 @@ Flight::route('POST /putUserStatusBySuperAdmin/@apk/@xapk', function ($apk,$xapk
 ini_set( 'display_errors', 1 );
 error_reporting( E_ALL );
 $from = "no-responder@crystalmodels.online";
-$to = $personalm;
+$to = "soporte@crystalmodels.online";
 $subject = "Usuario Oculto";
 
 $message = 'Eliminar o Desactivar correo Empresarial.   '.$companym.' Para el usuario: '.$name.' '.$lname;
