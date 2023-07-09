@@ -1171,11 +1171,6 @@ Flight::route('POST /forgotKeywordValidate/@headerslink', function ($headerslink
                     while ($row = $query->fetch_assoc()) {
                         
 
-                        $caracteresPermitidos = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-                        $longitud = 6; // Longitud deseada para la cadena aleatoria
-                        
-                       
-                       
                         
 $code1= $row['validationCode'];
 $cmail= $row['companyMail'];
