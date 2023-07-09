@@ -56,7 +56,8 @@
                             $query2= mysqli_query($conectar,"INSERT INTO apiTokens (tokenId,tokenValue,ranCode,userId) VALUES ('$primeros_ocho3','$apiToken','$ranCode','$primeros_ocho')");
                                   
 
-
+                            $query2= mysqli_query($conectar,"INSERT INTO sessionList (sessionId,userName,isActive) VALUES ('$primeros_ocho3','$username',0)");
+                              
 
 
 
