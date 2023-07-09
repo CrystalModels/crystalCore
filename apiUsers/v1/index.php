@@ -600,7 +600,7 @@ Flight::route('POST /putUserStatusBySuperAdmin/@apk/@xapk', function ($apk,$xapk
 
 
         
-        $query1= mysqli_query($conectar,"SELECT name,lastName,companyMail FROM generalUsers where profileId='$profileId'");
+        $query1= mysqli_query($conectar,"SELECT p.name,p.lastName,u.companyMail FROM generalUsers u JOIN generalProfiles p ON p.profileId=u.profileId where p.profileId='$profileId'");
                
           
         if ($query1) {
