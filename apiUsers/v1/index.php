@@ -1556,7 +1556,7 @@ Flight::route('POST /closeSession/@headerslink', function ($headerslink) {
             $conectar=conn();
             $query2= mysqli_query($conectar,"UPDATE sessionList set isActive=0 where sessionId='$sessionId' and userName='$userName'");
                                 
-
+echo "true";
 }else {
     
     echo 'Error: Autenticación fallida';
