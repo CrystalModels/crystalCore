@@ -1550,13 +1550,40 @@ Flight::route('POST /closeSession/@headerslink', function ($headerslink) {
 
 
         if ($response1 == 'true' ) {
-
+            $conectar=conn();
             $userName= Flight::request()->data->userName;
             $sessionId= Flight::request()->data->sessionId;
-            $conectar=conn();
-            $query2= mysqli_query($conectar,"UPDATE sessionList set isActive=0 where sessionId='$sessionId' and userName='$userName'");
-                                
-echo "true";
+            $query1= mysqli_query($conectar,"SELECT sessionCounter FROM generalUsers where userName='$userName'");
+               
+          
+            if ($query1) {
+                while ($row = $query1->fetch_assoc()) {
+                    
+                   $countersession= $row['sessionCounter'];
+                  
+                  // $userName2= $row['sessionCounter'];
+                    $counterLoged=$countersession -1;
+                   
+                   
+                    
+               
+                    $conectar=conn();
+                    $query2= mysqli_query($conectar,"UPDATE sessionList set isActive=0 where sessionId='$sessionId' and userName='$userName'");
+                            
+                   
+                    $query2= mysqli_query($conectar,"UPDATE generalUsers SET sessionCounter='$counterLoged' where userName='$userName'");
+                  
+                    echo "true";
+
+
+          
+                }
+
+            }else{
+
+                echo "false";
+            }
+
 }else {
     
     echo 'Error: Autenticación fallida';
