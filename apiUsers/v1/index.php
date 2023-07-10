@@ -1277,7 +1277,7 @@ $cmail= $row['companyMail'];
 $pmail= $row['personalMail'];
                 
 
-if($code1==$code){
+
     if (preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/", $newkeyword)) {
         $dato_encriptado2 = $encriptar($newkeyWord);
                         $query2= mysqli_query($conectar,"UPDATE generalUsers SET keyWord='$dato_encriptado2' where userName='$userName'");
@@ -1320,11 +1320,7 @@ mail($to,$subject,$message, $headers);
     else {
         echo "false*¡La contraseña no cumple con los requisitos!";
     }
-                       
-}else{
 
-    echo "false*¡Código de validación no coincide!";
-}
 
               
                     }
