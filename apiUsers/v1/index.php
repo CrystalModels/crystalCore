@@ -107,40 +107,22 @@ curl_setopt($curl, CURLOPT_HTTPHEADER, $headers1);
 $response3 = curl_exec($curl);
 
 
-//echo json_encode($headers);
 
-//echo $response2;
-/*
-curl_close($curl);
-date_default_timezone_set('America/Bogota');
-echo date('H:i:s');
-
-$hora1 = new DateTime('10:00:00');
-$hora2 = new DateTime('13:30:00');
-
-$diferencia = $hora1->diff($hora2);
-
-$diferenciaHoras = $diferencia->format('%H');
-$diferenciaMinutos = $diferencia->format('%i');
-$diferenciaSegundos = $diferencia->format('%s');
-
-echo "Diferencia de horas: $diferenciaHoras horas, $diferenciaMinutos minutos, $diferenciaSegundos segundos";
-//*/
-echo $response3;
+echo $response3."*¡Usuario creado con exito!";
 
 
 }
 else{
-echo "false";
+echo "false*¡Token Invalido!";
 }
 
            // echo json_encode($response1);
         } else {
-            echo 'Error: Autenticación fallida';
+            echo 'false*¡Autenticación fallida!';
            // echo json_encode($data);
         }
     } else {
-        echo 'Error: Encabezados faltantes qwe';
+        echo 'false*¡Encabezados faltantes!';
     }
 });
 
@@ -285,16 +267,16 @@ $response3 = curl_exec($curl);
 /*
 curl_close($curl);
 //*/
-echo $response3;
+echo $response3."*¡Usuario creado con exito!";
 }
 else{
-echo "false";
+echo "false*¡Token invalido!";
 }
  // echo $response1;
 
 }else{
 
-    echo "false";
+    echo "false*No tienes permisos para realizar esta acción!";
 }
 
 
@@ -304,11 +286,11 @@ echo "false";
           
            // echo json_encode($response1);
         } else {
-            echo 'Error: Autenticación fallida';
+            echo 'false*¡Autenticación fallida!';
              //echo json_encode($response1);
         }
     } else {
-        echo 'Error: Encabezados faltantes';
+        echo 'false*¡Encabezados faltantes!';
     }
 });
 
@@ -413,11 +395,11 @@ if($response2=="true"){
              
     $query2= mysqli_query($conectar,"UPDATE generalUsers set personalMail='$personalMail' where profileId='$putId'");
                            
- echo "true";
+ echo "true*¡Usuario actualizado con exito!";
 
 }else{
 
-    echo "false";
+    echo "false*¡No tienes permisos para realizar esta acción!";
 }
 
 
@@ -427,11 +409,11 @@ if($response2=="true"){
           
            // echo json_encode($response1);
         } else {
-            echo 'Error: Autenticación fallida';
+            echo 'false*¡Autenticación fallida!';
              //echo json_encode($response1);
         }
     } else {
-        echo 'Error: Encabezados faltantes';
+        echo 'false*¡Encabezados faltantes!';
     }
 });
 
@@ -502,10 +484,10 @@ Flight::route('POST /putUsersBySuperAdmin/@apk/@xapk/@putId', function ($apk,$xa
              
     $query2= mysqli_query($conectar,"UPDATE generalUsers set personalMail='$personalMail',internalMail='$internalMail',companyMail='$companyMail' where profileId='$putId'");
                            
- echo "true";
+ echo "true*¡Usuario actualizado con exito!";
 
 }else {
-    echo 'Error: Autenticación fallida';
+    echo 'false*¡Autenticación fallida!';
 }
 
 
@@ -515,7 +497,7 @@ Flight::route('POST /putUsersBySuperAdmin/@apk/@xapk/@putId', function ($apk,$xa
           
            // echo json_encode($response1);
         } else {
-            echo 'Error: Encabezados faltantes';
+            echo 'false*¡Encabezados faltantes!';
             
              //echo json_encode($response1);
         }
@@ -575,7 +557,7 @@ Flight::route('POST /putUserStatusBySuperAdmin/@apk/@xapk', function ($apk,$xapk
         $query2= mysqli_query($conectar,"UPDATE generalProfiles set isActive=1 where profileId='$profileId'");
              
         $query2= mysqli_query($conectar,"UPDATE generalUsers set isActive=1 where profileId='$profileId'");
-        echo "true";
+        echo "true*!Estado editado con exito!";
     }
     if($value=="dec"){
         $query2= mysqli_query($conectar,"UPDATE generalProfiles set isActive=0 where profileId='$profileId'");
@@ -583,13 +565,13 @@ Flight::route('POST /putUserStatusBySuperAdmin/@apk/@xapk', function ($apk,$xapk
         $query2= mysqli_query($conectar,"UPDATE generalUsers set isActive=0,sessionCounter=0 where profileId='$profileId'");
         $query2= mysqli_query($conectar,"UPDATE sessionList SET isActive=0 where userName IN (SELECT userName from generalUsers where profileId='$profileId') and isActive=1");
     
-        echo "true";
+        echo "true*!Estado editado con exito!";
     }
     if($value=="sho"){
         $query2= mysqli_query($conectar,"UPDATE generalProfiles set status=1 where profileId='$profileId'");
              
         $query2= mysqli_query($conectar,"UPDATE generalUsers set status=1 where profileId='$profileId'");
-        echo "true";
+        echo "true*!Estado editado con exito!";
     }
     if($value=="hid"){
         $query2= mysqli_query($conectar,"UPDATE generalProfiles set isActive=0,status=0 where profileId='$profileId'");
@@ -641,9 +623,9 @@ mail($to,$subject,$message, $headers);
 
 
 }
-            echo "true";
+echo "true*!Estado editado con exito!";
         }else{
-            echo "true";
+            echo "false*¡Consulta fallida!";
             }
         
     }
@@ -651,7 +633,7 @@ mail($to,$subject,$message, $headers);
  
 
 }else {
-    echo 'Error: Autenticación fallida';
+    echo 'false*¡Autenticación fallida!';
 }
 
 
@@ -661,7 +643,7 @@ mail($to,$subject,$message, $headers);
           
            // echo json_encode($response1);
         } else {
-            echo 'Error: Encabezados faltantes';
+            echo 'false*¡Encabezados faltantes!';
             
              //echo json_encode($response1);
         }
@@ -743,10 +725,10 @@ Flight::route('POST /putUsersBySuperAdminGeneral/@putId', function ($putId) {
              
     $query2= mysqli_query($conectar,"UPDATE generalUsers set personalMail='$personalMail',companyMail='$companyMail',internalMail='$internalMail' where profileId='$putId'");
                            
- echo "true";
+ echo "true*¡Usuario actualizado con exito!";
 
 }else {
-    echo 'Error: Autenticación fallida';
+    echo 'false*¡Autenticación fallida!';
 }
 
 
@@ -756,7 +738,7 @@ Flight::route('POST /putUsersBySuperAdminGeneral/@putId', function ($putId) {
           
            // echo json_encode($response1);
         } else {
-            echo 'Error: Encabezados faltantes';
+            echo 'false*¡Encabezados faltantes!';
             
              //echo json_encode($response1);
         }
@@ -859,11 +841,11 @@ if($response2=="true"){
     $query2= mysqli_query($conectar,"UPDATE generalProfiles set rolId='$rolId' where profileId='$putId'");
              
                          
- echo "true";
+ echo "true*¡Rol editado con exito!";
 
 }else{
 
-    echo "false";
+    echo "false*¡No tienes permisos para realizar esta acción!";
 }
 
 
@@ -873,11 +855,11 @@ if($response2=="true"){
           
            // echo json_encode($response1);
         } else {
-            echo 'Error: Autenticación fallida';
+            echo 'false*¡Autenticación fallida!';
              //echo json_encode($response1);
         }
     } else {
-        echo 'Error: Encabezados faltantes';
+        echo 'false*¡Encabezados faltantes!';
     }
 });
 
@@ -957,23 +939,18 @@ Flight::route('POST /putKeyword/@profileId/', function ($profileId) {
     $query2= mysqli_query($conectar,"UPDATE generalUsers set keyWord='$dato_encriptado2' where profileId='$profileId'");
              
                          
- echo "true";
+ echo "true*¡Contraseña actualizada con exito!";
             }else{
 
-                echo "false";
+                echo "false*¡Contraseña incorrecta!";
             }
 }else {
-    echo 'Error: Autenticación fallida';
+    echo 'false*¡Autenticación fallida!';
 }
 
-
-
-
-           
-          
            // echo json_encode($response1);
         } else {
-            echo 'Error: Encabezados faltantes';
+            echo 'false*¡Encabezados faltantes!';
             
              //echo json_encode($response1);
         }
@@ -1045,21 +1022,6 @@ Flight::route('POST /forgotKeyword/@headerslink', function ($headerslink) {
                         
 $userMail= $row['companyMail'];
 
-               /*
-                   
-
-                    ini_set( 'display_errors', 1 );
-                    error_reporting( E_ALL );
-                    $from = "no-responder@crystalmodels.online";
-                    $to = $userMail;
-                    $subject = "Código de Validación";
-                    
-                $message .= "TU CÓDIGO DE VALIDACIÓN ES: ";
-                
-                     $headers = "From:" . $from;
-                    mail($to,$subject,$message, $headers);
-                  //  echo "The email message was sent.";
-                        */
                   $query2= mysqli_query($conectar,"UPDATE generalUsers SET validationCode='$numeroAleatorio' where companyMail='$userMail'");
                   
 
@@ -1080,21 +1042,22 @@ mail($to,$subject,$message, $headers);
 
                  
                     }
+                    echo "true*¡Código enviado con exito!";
                 } else {
                     // Manejar el error de la consulta
-                    echo "Error en la consulta: " . mysqli_error($conectar);
+                    echo "false*¡Error en la consulta! " . mysqli_error($conectar);
                 }
           
                 
              
                          
- echo "true";
+ 
             }else{
 
-                echo "false";
+                echo "false*¡No se puede validar usuario!";
             }
 }else {
-    echo 'Error: Autenticación fallida';
+    echo 'false*¡Autenticación fallida!';
 }
 
 
@@ -1104,7 +1067,7 @@ mail($to,$subject,$message, $headers);
           
            // echo json_encode($response1);
         } else {
-            echo 'Error: Encabezados faltantes';
+            echo 'false*¡Encabezados faltantes!';
             
              //echo json_encode($response1);
         }
@@ -1216,36 +1179,32 @@ $headers = "From:" . $from;
 mail($to,$subject,$message, $headers);
 
 
-                        echo "true";
+                        echo "true*¡Contraseña editada coon exito!";
 }else{
 
-    echo "false";
+    echo "false*¡Código de validación no coincide!";
 }
 
               
                     }
                 } else {
                     // Manejar el error de la consulta
-                    echo "Error en la consulta: " . mysqli_error($conectar);
+                    echo "false*¡Error en la consulta! " . mysqli_error($conectar);
                 }
           
 
             }else{
 
-                echo "false";
+                echo "false*¡No se puede validar uausario!";
             }
 }else {
-    echo 'Error: Autenticación fallida';
+    echo 'false*¡Autenticación fallida!';
 }
 
 
-
-
-           
-          
            // echo json_encode($response1);
         } else {
-            echo 'Error: Encabezados faltantes';
+            echo 'false*¡Encabezados faltantes!';
             
              //echo json_encode($response1);
         }
@@ -1334,10 +1293,10 @@ Flight::route('POST /validateLogIn/@headerslink', function ($headerslink) {
                             $query2= mysqli_query($conectar,"UPDATE generalUsers SET sessionCounter='$counterLoged' where userName='$userName1'");
                             $query2= mysqli_query($conectar,"INSERT INTO sessionList (sessionId,userName,sTime,sDate,sIp,browser) VALUES ('$primeros_ocho','$userName','$horaActual','$fechaActual','$ipAdd','$browserdecode')");
                   
-                            echo "true ".$primeros_ocho;
+                            echo "true*".$primeros_ocho;
                         } if($counterLoged>2 || $counterLoged <1){
                           
-                            echo "Tienes 2 sesiones Activas, cierra sesión en algun dispositivo para continuar";
+                            echo "false*¡Tienes 2 sesiones Activas, cierra sesión en algun dispositivo para continuar!";
                         }
 
                       // $userName2= $row['sessionCounter'];
@@ -1354,18 +1313,18 @@ Flight::route('POST /validateLogIn/@headerslink', function ($headerslink) {
                     }
                 } else {
                     // Manejar el error de la consulta
-                    echo "Error en la consulta: " . mysqli_error($conectar);
+                    echo "false*¡Error en la consulta! " . mysqli_error($conectar);
                 }
           
 
             }else{
 
-                echo "false";
+                echo "false*¡Usuario o contraseña incorrecta!";
                // echo $keyWord;
             }
 }else {
     
-    echo 'Error: Autenticación fallida';
+    echo 'false*¡Autenticación fallida!';
 }
 
 
@@ -1375,7 +1334,85 @@ Flight::route('POST /validateLogIn/@headerslink', function ($headerslink) {
           
            // echo json_encode($response1);
         } else {
-            echo 'Error: Encabezados faltantes';
+            echo 'false*¡Encabezados faltantes!';
+            
+             //echo json_encode($response1);
+        }
+});
+
+
+
+Flight::route('POST /changePass/@headerslink', function ($headerslink) {
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+    header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+    
+    // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
+    if (!empty($headerslink)) {
+    
+       
+        
+        $sub_domaincon=new model_domain();
+        $sub_domain=$sub_domaincon->dom();
+        $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKeyLog/';
+      
+        $data = array(
+          'xApiKey' => $headerslink
+          
+          );
+      $curl = curl_init();
+      $dta1=json_encode($data);
+      // Configurar las opciones de la sesión cURL
+      curl_setopt($curl, CURLOPT_URL, $url);
+      curl_setopt($curl, CURLOPT_POST, true);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $dta1);
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+      
+      // Ejecutar la solicitud y obtener la respuesta
+      $response1 = curl_exec($curl);
+
+      
+
+
+      curl_close($curl);
+
+
+        // Realizar acciones basadas en los valores de los encabezados
+
+
+        if ($response1 == 'true' ) {
+            $conectar=conn();
+            require_once '../../apiUsers/v1/model/modelSecurity/crypt/cryptic.php';
+
+            
+            $userName= Flight::request()->data->userName;
+            $keyWord= Flight::request()->data->keyWord;
+            $newkeyWord= Flight::request()->data->newkeyWord;
+          
+            $dato_encriptado = $encriptar($keyWord);
+            $query1= mysqli_query($conectar,"SELECT userName FROM generalUsers where userName='$userName' and status=1 and companyMail not in('','null',' ','   ','0','@','.com')  and keyWord = '$dato_encriptado' and isActive=1 or internalMail='$userName' and status=1 and companyMail not in('','null',' ','   ','0','@','.com') and keyWord = '$dato_encriptado' and isActive=1 or companyMail='$userName' and status=1 and companyMail not in('','null',' ','   ','0','@','.com') and keyWord = '$dato_encriptado' and isActive=1");
+            $nr=mysqli_num_rows($query1);
+        
+            if($nr>=1){
+                $dato_encriptado3 = $encriptar($newkeyWord);
+                $query1= mysqli_query($conectar,"UPDATE generalUsers SET keyWord='$dato_encriptado3' where userName='$userName'");
+               
+                echo "true*¡Contraseña editada con exito!";
+
+            }else{
+
+                echo "false*¡Usuario o contraseña incorrectos!";
+               // echo $keyWord;
+            }
+}else {
+    
+    echo 'false*¡Autenticación fallida!';
+}
+
+           // echo json_encode($response1);
+        } else {
+            echo 'false*¡Encabezados faltantes!';
             
              //echo json_encode($response1);
         }
@@ -1462,22 +1499,15 @@ Flight::route('POST /validateLogInChange/@headerslink', function ($headerslink) 
                             $browserdecode = base64_decode($browser);
 
                           
-                            echo "true ".$primeros_ocho;
+                            echo "true*".$primeros_ocho;
                         } if($counterLoged<2){
                           
-                            echo "Tienes 1 sesion Activa o ningúna sesión activa";
+                            echo "false*¡Tienes 1 o nungúna sesión activa!";
                         }
 
                       // $userName2= $row['sessionCounter'];
                       
-                       
-                       
-                        
-
-                       
-                       
-
-
+                     
               
                     }
                 } else {
@@ -1488,22 +1518,17 @@ Flight::route('POST /validateLogInChange/@headerslink', function ($headerslink) 
 
             }else{
 
-                echo "false";
+                echo "false*¡Usuario o contraseña incorrectos!";
                // echo $keyWord;
             }
 }else {
     
-    echo 'Error: Autenticación fallida';
+    echo 'false*¡Autenticación fallida!';
 }
-
-
-
-
-           
           
            // echo json_encode($response1);
         } else {
-            echo 'Error: Encabezados faltantes';
+            echo 'Efalse*¡Encabezados faltantes!';
             
              //echo json_encode($response1);
         }
@@ -1573,7 +1598,7 @@ Flight::route('POST /closeSession/@headerslink', function ($headerslink) {
                    
                     $query2= mysqli_query($conectar,"UPDATE generalUsers SET sessionCounter='$counterLoged' where userName='$userName'");
                   
-                    echo "true";
+                    echo "true*¡Sesión cerrada con exito!";
 
 
           
@@ -1581,22 +1606,18 @@ Flight::route('POST /closeSession/@headerslink', function ($headerslink) {
 
             }else{
 
-                echo "false";
+                echo "false*¡Usuario incorrecto!";
             }
 
 }else {
     
-    echo 'Error: Autenticación fallida';
+    echo 'false*¡Autenticación fallida!';
 }
 
 
-
-
-           
-          
            // echo json_encode($response1);
         } else {
-            echo 'Error: Encabezados faltantes';
+            echo 'false*¡Encabezados faltantes!';
             
              //echo json_encode($response1);
         }
@@ -1674,33 +1695,28 @@ Flight::route('POST /validateLogOut/@headerslink', function ($headerslink) {
                         $query2= mysqli_query($conectar,"UPDATE generalUsers SET sessionCounter='$counterLoged' where userName='$userName1'");
                         $query2= mysqli_query($conectar,"UPDATE sessionList SET isActive=0 where sessionId='$sessionId'");
                   
-                        echo "true";
+                        echo "true*¡Hasta luego!";
 
 
               
                     }
                 } else {
                     // Manejar el error de la consulta
-                    echo "Error en la consulta: " . mysqli_error($conectar);
+                    echo "false*¡Error en la consulta¡ " . mysqli_error($conectar);
                 }
           
 
             }else{
 
-                echo "false";
+                echo "false*¡Perfil incorrecto!";
             }
 }else {
-    echo 'Error: Autenticación fallida';
+    echo 'false*¡Autenticación fallida!';
 }
 
-
-
-
-           
-          
            // echo json_encode($response1);
         } else {
-            echo 'Error: Encabezados faltantes';
+            echo 'false*¡Encabezados faltantes!';
             
              //echo json_encode($response1);
         }
@@ -1759,20 +1775,16 @@ Flight::route('POST /putUsersRolBySuperAdmin/@apk/@xapk', function ($apk,$xapk) 
     $query2= mysqli_query($conectar,"UPDATE generalProfiles set rolId='$rolId' where profileId='$putId'");
              
                          
- echo "true";
+ echo "true*¡Rol actualizado con exito!";
 
 }else {
-    echo 'Error: Autenticación fallida';
+    echo 'false*¡Autenticación fallida!';
 }
 
 
-
-
-           
-          
            // echo json_encode($response1);
         } else {
-            echo 'Error: Encabezados faltantes';
+            echo 'false*¡Encabezados faltantes!';
             
              //echo json_encode($response1);
         }
