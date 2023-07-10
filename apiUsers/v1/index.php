@@ -1465,7 +1465,7 @@ Flight::route('POST /validateLogInChange/@headerslink', function ($headerslink) 
                             echo "true ".$primeros_ocho;
                         } if($counterLoged<2){
                           
-                            echo "Tienes 1 sesion Activa";
+                            echo "Tienes 1 sesion Activa o ningúna sesión activa";
                         }
 
                       // $userName2= $row['sessionCounter'];
