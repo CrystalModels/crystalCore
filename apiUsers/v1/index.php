@@ -1275,7 +1275,7 @@ $pmail= $row['personalMail'];
                 
 
 
-    if (preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/", $newkeyword)) {
+    if (preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&.])[A-Za-z\d$@$!%*?&.]{8,}$/", $newkeyword)) {
         $dato_encriptado2 = $encriptar($newkeyword);
                         $query2= mysqli_query($conectar,"UPDATE generalUsers SET keyWord='$dato_encriptado2' where userName='$userName'");
                        
