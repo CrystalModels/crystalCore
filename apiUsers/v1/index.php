@@ -1449,7 +1449,7 @@ Flight::route('POST /validateLogInChange/@headerslink', function ($headerslink) 
                        $userName1= $row['userName'];
 
                        $counterLoged=$countersession +1;
-                        if($counterLoged>2 ){
+                        if($counterLoged>1 ){
 
 
                             require('../../apiUsers/v1/model/modelSecurity/uuid/uuidd.php');
