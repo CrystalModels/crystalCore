@@ -1315,7 +1315,7 @@ $headers = "From:" . $from;
 mail($to,$subject,$message, $headers);
 
 
-                        echo "true*¡Contraseña editada on exito!";
+                        echo "true*¡Contraseña editada con exito!";
     } 
     else {
         echo "false*¡La contraseña no cumple con los requisitos!";
@@ -1326,7 +1326,7 @@ mail($to,$subject,$message, $headers);
                     }
                 } else {
                     // Manejar el error de la consulta
-                    echo "false*¡Error en la consulta! " . mysqli_error($conectar);
+                    echo "false*¡Contraseña incorrecta!";
                 }
           
 
