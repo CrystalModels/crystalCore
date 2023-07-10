@@ -1259,7 +1259,7 @@ Flight::route('POST /changeKeywordSession/@headerslink', function ($headerslink)
             require_once '../../apiUsers/v1/model/modelSecurity/crypt/cryptic.php';
             $dato_encriptado = $encriptar($keyword);
             
-            $query= mysqli_query($conectar,"SELECT userName FROM generalUsers where userName='$userName' and status=1 and keyWord='$dato_encriptado'");
+            $query= mysqli_query($conectar,"SELECT userName FROM generalUsers where userName='$userName' and keyWord='$dato_encriptado'");
             $nr=mysqli_num_rows($query);
         
             if($nr>=1){
