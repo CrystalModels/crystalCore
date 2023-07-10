@@ -1273,10 +1273,13 @@ Flight::route('POST /changeKeywordSession/@headerslink', function ($headerslink)
 $cmail= $row['companyMail'];
 $pmail= $row['personalMail'];
                 
+$containsMinLength = strlen($newkeyword) >= 8;
+$containsUppercase = preg_match("/[A-Z]/", $newkeyword);
+$containsLowercase = preg_match("/[a-z]/", $newkeyword);
+$containsSymbols = preg_match("/[$@$!%*?&.]/", $newkeyword);
+$containsNumber = preg_match("/\d/", $newkeyword);
 
-
-    if (preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&.])[A-Za-z\d$@$!%*?&.]{8,}$/", $newkeyword)) {
-        $dato_encriptado2 = $encriptar($newkeyword);
+if ($containsMinLength && $containsUppercase && $containsLowercase && $containsSymbols && $containsNumber) {      $dato_encriptado2 = $encriptar($newkeyword);
                         $query2= mysqli_query($conectar,"UPDATE generalUsers SET keyWord='$dato_encriptado2' where userName='$userName'");
                        
 
