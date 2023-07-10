@@ -1326,7 +1326,7 @@ mail($to,$subject,$message, $headers);
                     }
                 } else {
                     // Manejar el error de la consulta
-                    echo "false*¡Contraseña incorrecta!";
+                    echo "false*" . mysqli_error($conectar);
                 }
           
 
