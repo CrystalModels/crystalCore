@@ -1256,15 +1256,12 @@ Flight::route('POST /changeKeywordSession/@headerslink', function ($headerslink)
             $userName= Flight::request()->data->userName;
             $keyword= Flight::request()->data->keyword;
           
-            require_once '../../apiUsers/v1/model/modelSecurity/crypt/cryptic.php';
+          
             $dato_encriptado = $encriptar($keyword);
             
-            $query= mysqli_query($conectar,"SELECT userName FROM generalUsers where userName='$userName' and keyWord='$dato_encriptado'");
-            $nr=mysqli_num_rows($query);
-        
-            if($nr>=1){
+           
     
-                $query1= mysqli_query($conectar,"SELECT companyMail,personalMail FROM generalUsers where userName='$userName'");
+                $query1= mysqli_query($conectar,"SELECT companyMail,personalMail FROM generalUsers where userName='$userName' and keyWord='$dato_encriptado'");
                
           
                 if ($query1) {
@@ -1315,7 +1312,7 @@ $headers = "From:" . $from;
 mail($to,$subject,$message, $headers);
 
 
-                        echo "true*¡Contraseña editada coon exito!";
+                        echo "true*¡Contraseña editada on exito!";
     } 
     else {
         echo "false*¡La contraseña no cumple con los requisitos!";
@@ -1330,10 +1327,7 @@ mail($to,$subject,$message, $headers);
                 }
           
 
-            }else{
-
-                echo "false*¡No se puede validar el usuario!";
-            }
+           
 }else {
     echo 'false*¡Autenticación fallida!';
 }
