@@ -1336,7 +1336,7 @@ mail($to,$subject,$message, $headers);
 
             }else{
 
-                echo "false*¡No se puede validar uausario!";
+                echo "false*¡No se puede validar el usuario!";
             }
 }else {
     echo 'false*¡Autenticación fallida!';
