@@ -3,8 +3,11 @@
 class model_domain {
 
 function dom() {
-    $option=2; //opcion de subdominio
-
+    
+    require_once 'option.php';
+    $sub_domaincon = new model_option();
+    $sub_domain = $sub_domaincon->dom();
+    $option=$sub_domain;
 
     if($option==1){//localhost
         $sub_domain="http://localhost";
@@ -29,8 +32,11 @@ function dom() {
    
 }
 function domIntegrations() {
-    $option=2; //opcion de subdominio
-
+    
+    require_once 'option.php';
+    $sub_domaincon = new model_option();
+    $sub_domain = $sub_domaincon->dom();
+    $option=$sub_domain;
 
     if($option==1){//localhost
         $sub_domain="http://localhost";
@@ -58,9 +64,11 @@ function domIntegrations() {
 
 
 function dom_mail() {
-    $option=2; //opcion de subdominio
-
-
+  
+    require_once 'option.php';
+    $sub_domaincon = new model_option();
+    $sub_domain = $sub_domaincon->dom();
+    $option=$sub_domain;
     if($option==1){//localhost
         $sub_domain="http://localhost";
         return $sub_domain;
