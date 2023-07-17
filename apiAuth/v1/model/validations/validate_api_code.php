@@ -1,7 +1,7 @@
 <?php
     
     class model_validate {
-        function model_api_key($dta) {
+        function  model_api_key($dta) {
             require_once 'database/db_users.php';
             $conectar = conn();
         
