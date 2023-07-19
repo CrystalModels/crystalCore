@@ -1401,7 +1401,7 @@ Flight::route('POST /validateLogIn/@headerslink', function ($headerslink) {
         
             if($nr>=1){
     
-                $query11= mysqli_query($conectar,"SELECT r.name FROM roles r JOIN generalProfileS p ON r.rolId=p.rolId JOIN generalUsers u ON u.profileId=p.profileId where u.userName='$userName'");
+                $query11= mysqli_query($conectar,"SELECT r.name FROM roles r JOIN generalProfiles p ON r.rolId=p.rolId JOIN generalUsers u ON u.profileId=p.profileId where u.userName='$userName'");
                
 
                 while ($row = $query11->fetch_assoc()) {
