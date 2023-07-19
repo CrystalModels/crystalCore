@@ -1401,9 +1401,20 @@ Flight::route('POST /validateLogIn/@headerslink', function ($headerslink) {
         
             if($nr>=1){
     
+                $query11= mysqli_query($conectar,"SELECT r.name FROM roles r JOIN generalProfile p ON r.rolId=p.rolId JOIN generalUsers u ON u.profileId=p.profileId where u.userName='$userName'");
+               
+
+                while ($row = $query11->fetch_assoc()) {
+                        
+
+                    $_SESSION['rolstatus']= $row['name'];
+                }
+
                 $query1= mysqli_query($conectar,"SELECT sessionCounter,userName FROM generalUsers where userName='$userName' or companyMail='$userName' or internalMail='$userName'");
                
-          
+               
+
+
                 if ($query1) {
                     while ($row = $query1->fetch_assoc()) {
                         
@@ -1412,7 +1423,7 @@ Flight::route('POST /validateLogIn/@headerslink', function ($headerslink) {
                        $userName1= $row['userName'];
 
                        $counterLoged=$countersession +1;
-                        if($counterLoged<=2 ){
+                        if($counterLoged<=2 && $_SESSION['rolstatus']!="MODEL"){
 
 
                             require('../../apiUsers/v1/model/modelSecurity/uuid/uuidd.php');
@@ -1428,9 +1439,30 @@ Flight::route('POST /validateLogIn/@headerslink', function ($headerslink) {
                             $query2= mysqli_query($conectar,"INSERT INTO sessionList (sessionId,userName,sTime,sDate,sIp,browser) VALUES ('$primeros_ocho','$userName','$horaActual','$fechaActual','$ipAdd','$browserdecode')");
                   
                             echo "true*".$primeros_ocho;
-                        } if($counterLoged>2 || $counterLoged <1){
+                        } if($counterLoged>2 && $_SESSION['rolstatus']!="MODEL" || $counterLoged <1 && $_SESSION['rolstatus']!="MODEL"){
                           
                             echo "false*¡Tienes 2 sesiones Activas, cierra sesión en algun dispositivo para continuar!";
+                        }
+
+                        if($counterLoged<=1 && $_SESSION['rolstatus']=="MODEL"){
+
+
+                            require('../../apiUsers/v1/model/modelSecurity/uuid/uuidd.php');
+    $con=new generateUuid();
+        $myuuid = $con->guidv4();
+        $primeros_ocho = substr($myuuid, 0, 8);
+                            date_default_timezone_set('America/Bogota');
+                            $horaActual = date('H:i:s');
+                            $fechaActual = date('Y-m-d');
+                            $browserdecode = base64_decode($browser);
+
+                            $query2= mysqli_query($conectar,"UPDATE generalUsers SET sessionCounter='$counterLoged' where userName='$userName1'");
+                            $query2= mysqli_query($conectar,"INSERT INTO sessionList (sessionId,userName,sTime,sDate,sIp,browser) VALUES ('$primeros_ocho','$userName','$horaActual','$fechaActual','$ipAdd','$browserdecode')");
+                  
+                            echo "true*".$primeros_ocho;
+                        } if($counterLoged>1 && $_SESSION['rolstatus']=="MODEL" || $counterLoged <1 && $_SESSION['rolstatus']=="MODEL"){
+                          
+                            echo "false*¡Tienes 1 sesiones Activas, cierra sesión en algun dispositivo para continuar!";
                         }
 
                       // $userName2= $row['sessionCounter'];
