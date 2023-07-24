@@ -8,7 +8,7 @@ $dev=2;
 $stg=3;
 $prod=4;
 
-    $option=$dev; //opcion de subdominio y base de datos
+    $option=$stg; //opcion de subdominio y base de datos
 
 return $option;
 
