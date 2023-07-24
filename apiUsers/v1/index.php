@@ -1468,7 +1468,7 @@ Flight::route('POST /validateLogIn/@headerslink', function ($headerslink) {
                             echo "false*¡Tienes 2 sesiones Activas, cierra sesión en algun dispositivo para continuar!";
                         }
 
-                        if($counterLoged<=1 && $_SESSION['rolstatus']=="MODEL"){
+                        if($counterLoged<=1 && $_SESSION['rolstatus']=="MODEL" || $counterLoged<=1 && $_SESSION['rolstatus']=="PHOTO"){
 
 
                             require('../../apiUsers/v1/model/modelSecurity/uuid/uuidd.php');
