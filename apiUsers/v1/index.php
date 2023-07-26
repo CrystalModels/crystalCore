@@ -3604,7 +3604,7 @@ $ver=new versiones();
 $ver1= $ver->ver_change();
 
            
-               
+               echo $ver1;
            
 
         } else {
