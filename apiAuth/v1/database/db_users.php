@@ -3,7 +3,7 @@
 
 
 function conn() {
-    $hostname = "212.1.211.1"; // o dirección IP del servidor de la base de datos remota
+    $hostname = "localhost"; // o dirección IP del servidor de la base de datos remota
     $usuariodb = "u495616274_dev_crystalcor"; // reemplazar con el usuario de la base de datos
     $passworddb = "e8:WTU8jAzY"; // reemplazar con la contraseña de la base de datos
     $dbname = "u495616274_dev_crystalcor"; // reemplazar con el nombre de la base de datos
