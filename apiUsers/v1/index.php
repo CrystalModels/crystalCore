@@ -3616,4 +3616,125 @@ $ver1= $ver->ver_change();
     }
 });
 
+
+
+
+
+
+Flight::route('POST /sendMailModelEarn/@apk/@xapk', function ($apk,$xapk) {
+  
+    header("Access-Control-Allow-Origin: *");
+    // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
+    if (!empty($apk) && !empty($xapk)) {    
+        // Leer los datos de la solicitud
+        
+    
+       
+
+        $sub_domaincon=new model_domain();
+        $sub_domain=$sub_domaincon->dom();
+        $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKey/';
+      
+        $data = array(
+          'apiKey' =>$apk, 
+          'xApiKey' => $xapk
+          
+          );
+      $curl = curl_init();
+      
+      // Configurar las opciones de la sesión cURL
+      curl_setopt($curl, CURLOPT_URL, $url);
+      curl_setopt($curl, CURLOPT_POST, true);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      // curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+      
+      // Ejecutar la solicitud y obtener la respuesta
+      $response1 = curl_exec($curl);
+
+      
+
+
+      curl_close($curl);
+
+      
+
+        // Realizar acciones basadas en los valores de los encabezados
+
+
+        if ($response1 == 'true' ) {
+
+        
+            $startAmmount= Flight::request()->data->startAmmount;
+            $discountAmmount= Flight::request()->data->discountAmmount;
+
+            $discountPercent= Flight::request()->data->discountPercent;
+            $endAmmount= Flight::request()->data->endAmmount;
+
+            $earnId= Flight::request()->data->earnId;
+            $cuttingId= Flight::request()->data->cuttingId;
+
+            $startDate= Flight::request()->data->startDate;
+            $endDate= Flight::request()->data->endDate;
+
+            $startTime= Flight::request()->data->startTime;
+            $endTime= Flight::request()->data->endTime;
+
+            $totalTime= Flight::request()->data->totalTime;
+            $paymentCurrency= Flight::request()->data->paymentCurrency;
+
+            $comments= Flight::request()->data->comments;
+            $name= Flight::request()->data->name;
+            $profileId= Flight::request()->data->modelId;
+
+    $conectar=conn();
+
+
+
+    $query1= mysqli_query($conectar,"SELECT u.userId,u.personalMail,u.companyMail,u.internalMail,u.isActive,u.status,u.createdAt as userCreation,u.updatedAt as userUpdated,u.userName,u.sessionCounter,u.lastLoged,u.ownerId,p.profileId,p.name,p.lastName,p.imageUrl,p.totalHours,p.updatedAt as profileUpdated,r.name as rol,t.tokenId,t.tokenValue,t.ranCode,t.lastDate FROM generalUsers u JOIN generalProfiles p ON p.profileId=u.profileId JOIN roles r ON r.rolId=p.rolId JOIN apiTokens t ON t.userId=u.userId where p.profileId='$profileId'");
+               
+          
+    if ($query1) {
+        while ($row = $query1->fetch_assoc()) { 
+
+
+$cMail=$row['companyMail'];
+
+
+ini_set( 'display_errors', 1 );
+error_reporting( E_ALL );
+$from = "no-responder@crystalmodels.online";
+$to = $cMail;
+$subject = "Validación de corte";
+
+$message = 'Transmisión '.$earnId.' fue validada por un monto de $'.$endAmmount.' se realizó un total de descuentos de $'.$discountAmmount.' ('.$discountPercent.'%), sobre el monto inicial $'.$startAmmount.'. Con un total de tiempo de transmisión ('.$totalTime.'), empezando el ('.$startDate.' '.$startTime.'), finalizando el ('.$endDate.' '.$endTime.'), en el sitio '.$name.'. Esta ganancia pertenece al corte '.$cuttingId.' y se hará efectiva en moneda '.$paymentCurrency.'. Comentarios: '.$comments.'.';
+
+
+
+$headers = "From:" . $from;
+mail($to,$subject,$message, $headers);
+
+        }
+    }    
+
+
+
+ 
+
+}else {
+    echo 'false*¡Autenticación fallida!';
+}
+
+
+           // echo json_encode($response1);
+        } else {
+            echo 'false*¡Encabezados faltantes!';
+            
+             //echo json_encode($response1);
+        }
+});
+
+
+
+
 Flight::start();
