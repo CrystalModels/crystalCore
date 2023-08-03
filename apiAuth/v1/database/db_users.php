@@ -34,7 +34,7 @@ function conn() {
     }
 }
 if($option==2){
-    $hostname = "212.1.211.1"; // o dirección IP del servidor de la base de datos remota
+    $hostname = "localhost"; // o dirección IP del servidor de la base de datos remota
     $usuariodb = "u495616274_dev_crystalcor"; // reemplazar con el usuario de la base de datos
     $passworddb = "e8:WTU8jAzY"; // reemplazar con la contraseña de la base de datos
     $dbname = "u495616274_dev_crystalcor"; // reemplazar con el nombre de la base de datos
@@ -56,7 +56,7 @@ if($option==2){
     }
 }
 if($option==3){
-    $hostname = "212.1.211.1"; // o dirección IP del servidor de la base de datos remota
+    $hostname = "localhost"; // o dirección IP del servidor de la base de datos remota
     $usuariodb = "u495616274_stg_crystalcor"; // reemplazar con el usuario de la base de datos
     $passworddb = "e8:WTU8jAzY"; // reemplazar con la contraseña de la base de datos
     $dbname = "u495616274_stg_crystalcor"; // reemplazar con el nombre de la base de datos
@@ -78,7 +78,7 @@ if($option==3){
     }
 }
 if($option==4){
-    $hostname = "212.1.211.1"; // o dirección IP del servidor de la base de datos remota
+    $hostname = "localhost"; // o dirección IP del servidor de la base de datos remota
     $usuariodb = "u495616274_crystalcor"; // reemplazar con el usuario de la base de datos
     $passworddb = "e8:WTU8jAzY"; // reemplazar con la contraseña de la base de datos
     $dbname = "u495616274_crystalcor"; // reemplazar con el nombre de la base de datos
