@@ -3808,7 +3808,7 @@ ini_set( 'display_errors', 1 );
 error_reporting( E_ALL );
 $from = "no-responder@crystalmodels.online";
 $to = $cMail;
-$subject = "Validación de corte";
+$subject = "Cierre de corte";
 
 $message = $value;
 
