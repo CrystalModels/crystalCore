@@ -1445,6 +1445,9 @@ Flight::route('POST /validateLogIn/@headerslink', function ($headerslink) {
 
                        $countersession= $row['sessionCounter'];
                        $userName1= $row['userName'];
+                       if($countersession<0){
+                        $countersession=0;
+                       }
 
                        $counterLoged=$countersession +1;
                         if($counterLoged<=2 && $_SESSION['rolstatus']!="MODEL"){
