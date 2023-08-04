@@ -3820,7 +3820,7 @@ mail($to,$subject,$message, $headers);
     }    
 
 
-    echo 'true*Correo enviado!';
+    echo 'true*¡Correo enviado con exito!';
  
 
 }else {
