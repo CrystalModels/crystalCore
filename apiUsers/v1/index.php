@@ -3788,7 +3788,7 @@ Flight::route('POST /sendMessage/@apk/@xapk', function ($apk,$xapk) {
             $value= Flight::request()->data->value;
             $profileId= Flight::request()->data->profileId;
             
-
+            $sub= Flight::request()->data->sub;
           
     $conectar=conn();
 
@@ -3808,7 +3808,7 @@ ini_set( 'display_errors', 1 );
 error_reporting( E_ALL );
 $from = "no-responder@crystalmodels.online";
 $to = $cMail;
-$subject = "Cierre de corte";
+$subject = $sub;
 
 $message = $value;
 
