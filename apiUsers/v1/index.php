@@ -1445,6 +1445,9 @@ Flight::route('POST /validateLogIn/@headerslink', function ($headerslink) {
 
                        $countersession= $row['sessionCounter'];
                        $userName1= $row['userName'];
+                       if($countersession<0){
+                        $countersession=0;
+                       }
 
                        $counterLoged=$countersession +1;
                         if($counterLoged<=2 && $_SESSION['rolstatus']!="MODEL"){
@@ -2238,7 +2241,7 @@ Flight::route('GET /getAllModels/', function () {
             $conectar=conn();
             
           
-            $query= mysqli_query($conectar,"SELECT u.userId,u.personalMail,u.companyMail,u.internalMail,u.isActive,u.status,u.createdAt as userCreation,u.updatedAt as userUpdated,u.userName,u.sessionCounter,u.lastLoged,u.ownerId,p.profileId,p.name,p.lastName,p.imageUrl,p.totalHours,p.updatedAt as profileUpdated,r.name as rol,t.tokenId,t.tokenValue,t.ranCode,t.lastDate FROM generalUsers u JOIN generalProfiles p ON p.profileId=u.profileId JOIN roles r ON r.rolId=p.rolId JOIN apiTokens t ON t.userId=u.userId where r.name='MODEL' order by p.lastName ASC limit 100");
+            $query= mysqli_query($conectar,"SELECT u.userId,u.personalMail,u.companyMail,u.internalMail,u.isActive,u.status,u.createdAt as userCreation,u.updatedAt as userUpdated,u.userName,u.sessionCounter,u.lastLoged,u.ownerId,p.profileId,p.name,p.lastName,p.imageUrl,p.totalHours,p.updatedAt as profileUpdated,r.name as rol,t.tokenId,t.tokenValue,t.ranCode,t.lastDate FROM generalUsers u JOIN generalProfiles p ON p.profileId=u.profileId JOIN roles r ON r.rolId=p.rolId JOIN apiTokens t ON t.userId=u.userId where r.name='MODEL' and u.status=1 order by p.lastName ASC limit 100");
                
           
                 $values=[];
@@ -3719,6 +3722,105 @@ mail($to,$subject,$message, $headers);
 
 
 
+ 
+
+}else {
+    echo 'false*¡Autenticación fallida!';
+}
+
+
+           // echo json_encode($response1);
+        } else {
+            echo 'false*¡Encabezados faltantes!';
+            
+             //echo json_encode($response1);
+        }
+});
+
+
+
+
+
+Flight::route('POST /sendMessage/@apk/@xapk', function ($apk,$xapk) {
+  
+    header("Access-Control-Allow-Origin: *");
+    // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
+    if (!empty($apk) && !empty($xapk)) {    
+        // Leer los datos de la solicitud
+        
+    
+       
+
+        $sub_domaincon=new model_domain();
+        $sub_domain=$sub_domaincon->dom();
+        $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKey/';
+      
+        $data = array(
+          'apiKey' =>$apk, 
+          'xApiKey' => $xapk
+          
+          );
+      $curl = curl_init();
+      
+      // Configurar las opciones de la sesión cURL
+      curl_setopt($curl, CURLOPT_URL, $url);
+      curl_setopt($curl, CURLOPT_POST, true);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      // curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+      
+      // Ejecutar la solicitud y obtener la respuesta
+      $response1 = curl_exec($curl);
+
+      
+
+
+      curl_close($curl);
+
+      
+
+        // Realizar acciones basadas en los valores de los encabezados
+
+
+        if ($response1 == 'true' ) {
+
+        
+            $value= Flight::request()->data->value;
+            $profileId= Flight::request()->data->profileId;
+            
+            $sub= Flight::request()->data->sub;
+          
+    $conectar=conn();
+
+
+
+    $query1= mysqli_query($conectar,"SELECT u.userId,u.personalMail,u.companyMail,u.internalMail,u.isActive,u.status,u.createdAt as userCreation,u.updatedAt as userUpdated,u.userName,u.sessionCounter,u.lastLoged,u.ownerId,p.profileId,p.name,p.lastName,p.imageUrl,p.totalHours,p.updatedAt as profileUpdated,r.name as rol,t.tokenId,t.tokenValue,t.ranCode,t.lastDate FROM generalUsers u JOIN generalProfiles p ON p.profileId=u.profileId JOIN roles r ON r.rolId=p.rolId JOIN apiTokens t ON t.userId=u.userId where p.profileId='$profileId'");
+               
+          
+    if ($query1) {
+        while ($row = $query1->fetch_assoc()) { 
+
+
+$cMail=$row['companyMail'];
+
+
+ini_set( 'display_errors', 1 );
+error_reporting( E_ALL );
+$from = "no-responder@crystalmodels.online";
+$to = $cMail;
+$subject = $sub;
+
+$message = $value;
+
+
+$headers = "From:" . $from;
+mail($to,$subject,$message, $headers);
+
+        }
+    }    
+
+
+    echo 'true*¡Correo enviado con exito!';
  
 
 }else {
