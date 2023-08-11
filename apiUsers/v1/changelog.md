@@ -1,6 +1,9 @@
 # Changelog
 
 
+
+## [1.0.0-pr] - 2023-08-03
+- Sistema base
 ## [1.0.0-pr] - 2023-08-03
 - Sistema base
 ## [1.2.0-Beta] - 2023-08-03

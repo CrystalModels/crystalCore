@@ -7,7 +7,7 @@ function ver_change() {
     $values=[];
 
     $value=[
-        '1.0.0-pr' => '2023-08-03- Sistema base'
+        '1.0.0' => '2023-08-10- Sistema base'
         
     ];
     array_push($values,$value);
